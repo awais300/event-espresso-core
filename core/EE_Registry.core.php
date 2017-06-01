@@ -103,7 +103,7 @@ class EE_Registry implements ResettableInterface
     public $AssetsRegistry;
 
     /**
-     * StdClass object for holding addons which have registered themselves to work with EE core
+     * array for holding addons which have registered themselves to work with EE core
      *
      * @var EE_Addon[] $addons
      */
