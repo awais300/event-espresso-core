@@ -109,7 +109,7 @@ final class EE_System implements ResettableInterface
     /**
      * @var ActivationsAndUpgradesManager $activations_and_upgrades_manager
      */
-    protected $activations_and_upgrades_manager;
+    private $activations_and_upgrades_manager;
 
     /**
      * A Context DTO dedicated solely to identifying the current request type.
@@ -1015,16 +1015,6 @@ final class EE_System implements ResettableInterface
      * @return void
      */
     public function detect_if_activation_or_upgrade()
-    {
-    }
-
-
-
-    /**
-     * @deprecated 4.9.40
-     * @return void
-     */
-    protected function _handle_core_version_change()
     {
     }
 
