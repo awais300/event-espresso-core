@@ -64,7 +64,6 @@ class EEH_Event_View extends EEH_Base
     }
 
 
-
     /**
      *    display_ticket_selector
      *
