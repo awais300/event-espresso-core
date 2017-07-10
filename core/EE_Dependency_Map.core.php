@@ -899,8 +899,8 @@ class EE_Dependency_Map
                 'EventEspresso\core\services\orm\tree_traversal\NodeGroupDao' => EE_Dependency_Map::load_from_cache,
             ],
             'EventEspresso\core\services\activation\ActivationsAndUpgradesManager'                                        => [
-                null,
-                'EventEspresso\core\services\loaders\Loader' => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\services\activation\ActivationHandler'   => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\services\activation\RequestTypeDetector' => EE_Dependency_Map::load_from_cache,
             ],
             'EventEspresso\core\services\activation\ActivationHandler'                                                    => [
                 null,
