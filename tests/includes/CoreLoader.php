@@ -7,6 +7,7 @@ use EE_Registry;
 use EEH_Activation;
 use EE_Psr4AutoloaderInit;
 use EventEspresso\core\services\loaders\LoaderFactory;
+use EventEspresso\core\services\Benchmark;
 
 class CoreLoader
 {
@@ -21,9 +22,9 @@ class CoreLoader
         $this->requireTestCaseParents();
         $this->bootstrapMockAddon();
         $this->onShutdown();
-        \EventEspresso\core\services\Benchmark::writeResultsAtShutdown(
-            EVENT_ESPRESSO_UPLOAD_DIR . 'logs/benchmarking-master.html',  false
-        );
+        // Benchmark::writeResultsAtShutdown(
+        //     EVENT_ESPRESSO_UPLOAD_DIR . 'logs/benchmarking-master.html',  false
+        // );
     }
 
 
@@ -54,7 +55,7 @@ class CoreLoader
                 define('EE_TESTS_DIR', getenv('EE_TESTS_DIR'));
                 define('EE_PLUGIN_DIR', dirname(dirname(EE_TESTS_DIR)) . '/');
             } else {
-                define('EE_PLUGIN_DIR', dirname(dirname(dirname(__FILE__))) . '/');
+                define('EE_PLUGIN_DIR', dirname(dirname(__DIR__)) . '/');
                 define('EE_TESTS_DIR', EE_PLUGIN_DIR . 'tests/');
             }
 
