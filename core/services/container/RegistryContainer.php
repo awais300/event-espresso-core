@@ -50,7 +50,7 @@ class RegistryContainer implements ArrayAccess, CountableTraversableAggregate
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[ $offset ]);
     }
@@ -71,14 +71,14 @@ class RegistryContainer implements ArrayAccess, CountableTraversableAggregate
      */
     public function offsetGet($offset)
     {
-        return isset($this->container[ $offset ]) ? $this->container[ $offset ] : null;
+        return $this->container[ $offset ] ?? null;
     }
 
 
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->container);
     }
@@ -87,7 +87,7 @@ class RegistryContainer implements ArrayAccess, CountableTraversableAggregate
     /**
      * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->container);
     }
@@ -142,5 +142,14 @@ class RegistryContainer implements ArrayAccess, CountableTraversableAggregate
     public function __unset($offset)
     {
         unset($this->container[ $offset ]);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function returnArray(): array
+    {
+        return $this->container;
     }
 }
