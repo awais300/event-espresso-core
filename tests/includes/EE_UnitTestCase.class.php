@@ -1041,7 +1041,6 @@ class EE_UnitTestCase extends WP_UnitTestCase
     }
 
 
-
     /**
      * Makes a complete transaction record with all associated data (ie, its line items,
      * registrations, tickets, datetimes, events, attendees, questions, answers, etc).
@@ -1056,9 +1055,15 @@ class EE_UnitTestCase extends WP_UnitTestCase
      * @type string/int/Datetime $timestamp to use on the transaction and registration and payments etc
      * }
      * @return EE_Transaction
-     * @throws \EE_Error
+     * @throws EE_Error
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     * @throws \EventEspresso\core\exceptions\InvalidDataTypeException
+     * @throws \EventEspresso\core\exceptions\InvalidInterfaceException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
      */
-    protected function new_typical_transaction($options = array())
+    protected function new_typical_transaction(array $options = array())
     {
         $ticket_types = isset($options['ticket_types'])
             ? $options['ticket_types']
@@ -1095,9 +1100,12 @@ class EE_UnitTestCase extends WP_UnitTestCase
         $total_line_item = EEH_Line_Item::create_total_line_item($txn->ID());
         $total_line_item->save_this_and_descendants_to_txn($txn->ID());
         $taxes = EEM_Price::instance()->get_all_prices_that_are_taxes();
+        if($taxable_tickets){
+            $this->assertNotEmpty($taxes);
+        }
         for ($i = 1; $i <= $ticket_types; $i++) {
             /** @var EE_Ticket $ticket */
-            if(isset($options['tickets'], $options['tickets'][$i])){
+            if(isset($options['tickets'][$i])){
                 $ticket = $options['tickets'][$i];
                 $reg_final_price = $ticket->price();
                 $datetime = $ticket->first_datetime();
