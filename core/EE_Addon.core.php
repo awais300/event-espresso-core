@@ -1,12 +1,11 @@
 <?php
-
 use EventEspresso\core\domain\DomainInterface;
 use EventEspresso\core\domain\RequiresDependencyMapInterface;
 use EventEspresso\core\domain\RequiresDomainInterface;
 use EventEspresso\core\exceptions\InvalidDataTypeException;
 use EventEspresso\core\services\activation\ActivatableInterface;
 use EventEspresso\core\services\activation\ActivationHistory;
-use EventEspresso\core\services\activation\RequestType;
+use EventEspresso\core\services\activation\ActivationType;
 
 /**
  * Class EE_Addon
@@ -20,7 +19,6 @@ abstract class EE_Addon extends EE_Configurable
     implements ActivatableInterface, RequiresDependencyMapInterface, RequiresDomainInterface
 {
 
-
     /**
      * prefix to be added onto an addon's plugin slug to make a wp option name
      * which will be used to store the plugin's activation history
@@ -31,6 +29,11 @@ abstract class EE_Addon extends EE_Configurable
      * @var ActivationHistory $activation_history
      */
     private $activation_history;
+
+	/**
+     * @var ActivationType $activation_type
+     */
+    private $activation_type;
 
     /**
      * A non-internationalized name to identify this addon. Eg 'Calendar','MailChimp',etc/
@@ -103,11 +106,6 @@ abstract class EE_Addon extends EE_Configurable
      * @var int
      */
     protected $_req_type;
-
-    /**
-     * @var RequestType
-     */
-    private $request_type;
 
     /**
      * @var string
@@ -620,20 +618,20 @@ abstract class EE_Addon extends EE_Configurable
 
 
     /**
-     * @return RequestType
+     * @return ActivationType
      */
-    public function getRequestType(): RequestType
+    public function getActivationType(): ActivationType
     {
-        return $this->request_type;
+        return $this->activation_type;
     }
 
 
     /**
-     * @param RequestType $request_type
+     * @param ActivationType $activation_type
      */
-    public function setRequestType(RequestType $request_type)
+    public function setActivationType(ActivationType $activation_type)
     {
-        $this->request_type = $request_type;
+        $this->activation_type = $activation_type;
     }
 
 
@@ -750,7 +748,7 @@ abstract class EE_Addon extends EE_Configurable
      */
     public function detect_req_type(): int
     {
-        return $this->getRequestType()->getRequestType();
+        return $this->getActivationType()->getActivationType();
     }
 
 
