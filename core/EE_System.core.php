@@ -119,11 +119,6 @@ final class EE_System implements ActivatableInterface, ResettableInterface
      */
     private $activation_type;
 
-    /**
-     * @var bool $activation_detected
-     */
-    private $activation_detected = false;
-
 
     /**
      * @singleton method used to instantiate class object
@@ -471,10 +466,12 @@ final class EE_System implements ActivatableInterface, ResettableInterface
     public function detect_activations_or_upgrades()
     {
         $this->activations_and_upgrades_manager = ActivationsFactory::getActivationsAndUpgradesManager();
-        $this->activation_detected = $this->activations_and_upgrades_manager->detectActivationsAndVersionChanges(
-            array_merge(
-                array($this),
-                $this->registry->addons->returnArray()
+        $this->request->setIsActivation(
+            $this->activations_and_upgrades_manager->detectActivationsAndVersionChanges(
+                array_merge(
+                    array($this),
+                    $this->registry->addons->returnArray()
+                )
             )
         );
     }
@@ -602,7 +599,7 @@ final class EE_System implements ActivatableInterface, ResettableInterface
      */
     public function register_shortcodes_modules_and_widgets()
     {
-        if ($this->activation_detected) {
+        if ($this->request->isActivation()) {
             return;
         }
         // check for addons using old hook point
@@ -675,7 +672,7 @@ final class EE_System implements ActivatableInterface, ResettableInterface
         do_action('AHEE__EE_System__brew_espresso__begin', $this);
         // load some final core systems
         add_action('init', array($this, 'set_hooks_for_core'), 1);
-        if ($this->activation_detected) {
+        if ($this->request->isActivation()) {
             add_action('init', array($this, 'perform_activations_upgrades_and_migrations'), 3);
         }
         add_action('init', array($this, 'load_CPTs_and_session'), 5);
@@ -900,13 +897,12 @@ final class EE_System implements ActivatableInterface, ResettableInterface
 
 
     /**
-     *    extra_nocache_headers
+     * extra_nocache_headers
      *
-     * @access    public
      * @param $headers
-     * @return    array
+     * @return array
      */
-    public static function extra_nocache_headers($headers)
+    public static function extra_nocache_headers($headers): array
     {
         // for NGINX
         $headers['X-Accel-Expires'] = 0;
