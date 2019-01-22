@@ -1619,9 +1619,9 @@ class EE_Registration extends EE_Soft_Delete_Base_Class implements EEI_Registrat
     public function set_deleted($deleted)
     {
         if ($deleted) {
-            $this->delete();
+            $this->delete(__METHOD__);
         } else {
-            $this->restore();
+            $this->restore(__METHOD__);
         }
     }
 
@@ -2303,7 +2303,7 @@ class EE_Registration extends EE_Soft_Delete_Base_Class implements EEI_Registrat
      * @throws RuntimeException
      * @throws UnexpectedEntityException
      */
-    public function delete($source = '')
+    public function delete($source = 'unknown')
     {
         if ($this->update_extra_meta(EE_Registration::PRE_TRASH_REG_STATUS_KEY, $this->status_ID()) === true) {
             $current_user = wp_get_current_user();
@@ -2312,7 +2312,7 @@ class EE_Registration extends EE_Soft_Delete_Base_Class implements EEI_Registrat
                 array(
                     'trashed-by' => $current_user->ID ? $current_user->display_name : 'unauthed user',
                     'timestamp'  => time(),
-                    'source'     => $source ? $source : 'unknown',
+                    'source'     => $source,
                 )
             );
             $this->set_status(EEM_Registration::status_id_cancelled);
@@ -2336,7 +2336,7 @@ class EE_Registration extends EE_Soft_Delete_Base_Class implements EEI_Registrat
      * @throws RuntimeException
      * @throws UnexpectedEntityException
      */
-    public function restore($source = '')
+    public function restore($source = 'unknown')
     {
         $previous_status = $this->get_extra_meta(
             EE_Registration::PRE_TRASH_REG_STATUS_KEY,
@@ -2353,7 +2353,7 @@ class EE_Registration extends EE_Soft_Delete_Base_Class implements EEI_Registrat
             array(
                 'restored-by' => $current_user->ID ? $current_user->display_name : 'unauthed user',
                 'timestamp'   => time(),
-                'source'      => $source ? $source : 'unknown',
+                'source'      => $source,
             )
         );
         return parent::restore();
