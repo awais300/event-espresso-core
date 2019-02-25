@@ -435,6 +435,7 @@ class EEH_Template
      * @param  boolean $display_code whether to display the country code (USD). Default = TRUE
      * @param string   $CNT_ISO      2 letter ISO code for a country
      * @param string   $cur_code_span_class
+     * @param boolean $allow_partial_pennies whether to allow displaying partial penny amounts
      * @return string        the html output for the formatted money value
      * @throws \EE_Error
      */
@@ -443,7 +444,8 @@ class EEH_Template
         $return_raw = false,
         $display_code = true,
         $CNT_ISO = '',
-        $cur_code_span_class = 'currency-code'
+        $cur_code_span_class = 'currency-code',
+        $allow_partial_pennies = false
     ) {
         // ensure amount was received
         if ($amount === null) {
@@ -468,7 +470,24 @@ class EEH_Template
                     : new EE_Currency_Config();
             }
             // format float
-            $amount_formatted = number_format($amount, $mny->dec_plc, $mny->dec_mrk, $mny->thsnds);
+
+            $decimal_places_to_use = $mny->dec_plc;
+            // If we're allowing showing partial penny amounts, determine how many decimal places to use.
+            if($allow_partial_pennies){
+                $pos_of_period = strrpos($amount, '.');
+                if($pos_of_period !== false) {
+                    // Use a max of two extra decimal places (more than that and it starts
+                    // to look silly), but at least the normal number of decimal places.
+                    $decimal_places_to_use = min(
+                            max(
+                            strlen($amount) - 1 - strpos($amount, '.'),
+                            $decimal_places_to_use
+                        ),
+                        $decimal_places_to_use + 2
+                    );
+                }
+            }
+            $amount_formatted = number_format($amount, $decimal_places_to_use, $mny->dec_mrk, $mny->thsnds);
             // add formatting ?
             if (! $return_raw) {
                 // add currency sign
