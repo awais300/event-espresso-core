@@ -169,10 +169,11 @@ class EEH_Parse_Shortcodes
      * @access private
      * @return string
      */
-    private function _parse_message_template()
+    private function _parse_message_template( $parsed = '' )
     {
+        $parsed = $parsed === '' ? $this->_template : $parsed;
         // now let's get a list of shortcodes that are found in the given template
-        preg_match_all('/(\[.+?\])/', $this->_template, $matches);
+        preg_match_all('/(?|(\[+[^\[\]]+\])|(\[.*\]))/', $parsed, $matches);
         $shortcodes = (array) $matches[0]; // this should be an array of shortcodes in the template string.
 
         $matched_code = array();
@@ -202,6 +203,8 @@ class EEH_Parse_Shortcodes
             $list_type_shortcodes
         );
 
+        $shortcodes_not_for_this_parser = [];
+
         // now lets go ahead and loop through our parsers for each shortcode and setup the values
         foreach ($shortcodes as $shortcode) {
             foreach ($this->_shortcode_objs as $sc_obj) {
@@ -211,6 +214,7 @@ class EEH_Parse_Shortcodes
                     $sc_to_verify = ! empty($matches[0]) ? $matches[0][0] . ']' : $shortcode;
 
                     if (! array_key_exists($sc_to_verify, $sc_obj->get_shortcodes())) {
+                        $shortcodes_not_for_this_parser[] = $sc_to_verify;
                         continue; // the given shortcode isn't in this object
                     }
 
@@ -241,6 +245,24 @@ class EEH_Parse_Shortcodes
 
         // now we've got parsed values for all the shortcodes in the template so we can go ahead and swap the shortcodes out.
         $parsed = str_replace(array_values($matched_code), array_values($sc_values), $this->_template);
+
+        // are there any shortcodes left in the parsed content (might be nested)
+        preg_match_all('/(?|(\[+[^\[\]]+\])|(\[.*\]))/', $parsed, $after_parsed);
+
+        echo '<br>-------------<br>';
+        var_dump(count($after_parsed[0]));
+        echo '<br>-------------<br>';
+        var_dump(count($shortcodes_not_for_this_parser));
+
+        if ( count($after_parsed[0]) > 0) {
+            var_dump($after_parsed[0]);
+        }
+
+        if (count($after_parsed[0]) === 1) {
+            $parsed = $this->_parse_message_template( $parsed );
+        }
+
+
         return $parsed;
     }
 
