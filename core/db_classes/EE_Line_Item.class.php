@@ -19,7 +19,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      *
      * @type EE_Line_Item[]
      */
-    protected $_children = array();
+    protected $_children = [];
 
     /**
      * for the parent line item
@@ -42,7 +42,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      * @throws InvalidInterfaceException
      * @throws ReflectionException
      */
-    public static function new_instance($props_n_values = array(), $timezone = null, $date_formats = array())
+    public static function new_instance($props_n_values = [], $timezone = null, $date_formats = [])
     {
         $has_object = parent::_check_for_object(
             $props_n_values,
@@ -67,7 +67,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      * @throws InvalidInterfaceException
      * @throws ReflectionException
      */
-    public static function new_instance_from_db($props_n_values = array(), $timezone = null)
+    public static function new_instance_from_db($props_n_values = [], $timezone = null)
     {
         return new self($props_n_values, true, $timezone);
     }
@@ -85,7 +85,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      * @throws InvalidInterfaceException
      * @throws ReflectionException
      */
-    protected function __construct($fieldValues = array(), $bydb = false, $timezone = '')
+    protected function __construct($fieldValues = [], $bydb = false, $timezone = '')
     {
         parent::__construct($fieldValues, $bydb, $timezone);
         if (! $this->get('LIN_code')) {
@@ -356,9 +356,16 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
         return $this->get('LIN_unit_price');
     }
 
+
+    /**
+     * @return mixed|string
+     * @throws EE_Error
+     * @throws ReflectionException
+     * @since $VID:$
+     */
     public function prettyUnitPrice()
     {
-        if($this->parent_ID() !== 0
+        if ($this->parent_ID() !== 0
             && $this->parent() instanceof EE_Line_Item
             && $this->parent()->type() === EEM_Line_Item::type_line_item
         ) {
@@ -366,15 +373,15 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
         } else {
             $quantity = $this->quantity();
         }
-        if($this->is_percent()) {
-            return $this->get_model()->field_settings_for('LIN_unit_price')->prepare_for_pretty_echoing(
-                $this->total() / $quantity,
-                'no_currency_code'
-            );
+        if ($this->is_percent()) {
+            return $this->get_model()
+                        ->field_settings_for('LIN_unit_price')
+                        ->prepare_for_pretty_echoing($this->total() / $quantity);
         } else {
             return $this->unit_price_no_code();
         }
     }
+
 
     /**
      * Sets unit_price
@@ -388,9 +395,9 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      */
     public function set_unit_price($unit_price)
     {
-        if($this->type() !== EEM_Line_Item::type_sub_line_item) { 
+        if ($this->type() !== EEM_Line_Item::type_sub_line_item) {
             $unit_price = EEH_Money::round_for_currency($unit_price, EE_Config::instance()->currency->code);
-        } 
+        }
         $this->set('LIN_unit_price', $unit_price);
     }
 
@@ -497,9 +504,9 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      */
     public function set_total($total)
     {
-        if($this->type() !== EEM_Line_Item::type_sub_line_item) { 
-            $total = EEH_Money::round_for_currency($total, EE_Config::instance()->currency->code); 
-        } 
+        if ($this->type() !== EEM_Line_Item::type_sub_line_item) {
+            $total = EEH_Money::round_for_currency($total, EE_Config::instance()->currency->code);
+        }
         $this->set('LIN_total', $total);
     }
 
@@ -635,14 +642,14 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
     {
         if ($this->ID()) {
             return $this->get_model()->get_all(
-                array(
-                    array('LIN_parent' => $this->ID()),
-                    'order_by' => array('LIN_order' => 'ASC'),
-                )
+                [
+                    ['LIN_parent' => $this->ID()],
+                    'order_by' => ['LIN_order' => 'ASC'],
+                ]
             );
         }
         if (! is_array($this->_children)) {
-            $this->_children = array();
+            $this->_children = [];
         }
         return $this->_children;
     }
@@ -746,12 +753,12 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      * @throws InvalidInterfaceException
      * @throws ReflectionException
      */
-    public function ticket($query_params = array())
+    public function ticket($query_params = [])
     {
         // we're going to assume that when this method is called
         // we always want to receive the attached ticket EVEN if that ticket is archived.
         // This can be overridden via the incoming $query_params argument
-        $remove_defaults = array('default_where_conditions' => 'none');
+        $remove_defaults = ['default_where_conditions' => 'none'];
         $query_params = array_merge($remove_defaults, $query_params);
         return $this->get_first_related(EEM_Line_Item::OBJ_TYPE_TICKET, $query_params);
     }
@@ -873,7 +880,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
         if ($this->ID()) {
             // check for any duplicate line items (with the same code), if so, this replaces it
             $line_item_with_same_code = $this->get_child_line_item($line_item->code());
-            if ($line_item_with_same_code instanceof EE_Line_Item && $line_item_with_same_code !== $line_item) {
+            if (($line_item_with_same_code instanceof EE_Line_Item) && $line_item_with_same_code !== $line_item) {
                 $this->delete_child_line_item($line_item_with_same_code->code());
             }
             $line_item->set_parent_ID($this->ID());
@@ -935,7 +942,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
     {
         if ($this->ID()) {
             return $this->get_model()->get_one(
-                array(array('LIN_parent' => $this->ID(), 'LIN_code' => $code))
+                [['LIN_parent' => $this->ID(), 'LIN_code' => $code]]
             );
         }
         return isset($this->_children[ $code ])
@@ -958,10 +965,10 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
     public function delete_children_line_items()
     {
         if ($this->ID()) {
-            return $this->get_model()->delete(array(array('LIN_parent' => $this->ID())));
+            return $this->get_model()->delete([['LIN_parent' => $this->ID()]]);
         }
         $count = count($this->_children);
-        $this->_children = array();
+        $this->_children = [];
         return $count;
     }
 
@@ -1398,9 +1405,9 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
             }
         }
         return round(
-            $unit_price_for_total,
-            EE_Registry::instance()->CFG->currency->dec_plc
-        ) * $quantity_for_total;
+                   $unit_price_for_total,
+                   EE_Registry::instance()->CFG->currency->dec_plc
+               ) * $quantity_for_total;
     }
 
 
@@ -1704,7 +1711,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      */
     public function clear_related_line_item_cache()
     {
-        $this->_children = array();
+        $this->_children = [];
         $this->_parent = null;
     }
 
@@ -1730,10 +1737,10 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
 
     /************************* DEPRECATED *************************/
     /**
-     * @deprecated 4.6.0
      * @param string $type one of the constants on EEM_Line_Item
      * @return EE_Line_Item[]
      * @throws EE_Error
+     * @deprecated 4.6.0
      */
     protected function _get_descendants_of_type($type)
     {
@@ -1750,7 +1757,6 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
 
 
     /**
-     * @deprecated 4.6.0
      * @param string $type like one of the EEM_Line_Item::type_*
      * @return EE_Line_Item
      * @throws EE_Error
@@ -1758,6 +1764,7 @@ class EE_Line_Item extends EE_Base_Class implements EEI_Line_Item
      * @throws InvalidDataTypeException
      * @throws InvalidInterfaceException
      * @throws ReflectionException
+     * @deprecated 4.6.0
      */
     public function get_nearest_descendant_of_type($type)
     {
