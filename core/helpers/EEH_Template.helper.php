@@ -610,12 +610,16 @@ class EEH_Template
 
 
         $help_tab_lnk = $page . '-' . $action . '-' . $help_tab_id;
-        $icon = ! $icon_style ? ' dashicons-editor-help' : $icon_style;
-        $help_text = ! $help_text ? '' : $help_text;
-        return '<a id="' . $help_tab_lnk . '" class="ee-clickable dashicons espresso-help-tab-lnk ee-icon-size-22' . $icon . '" title="' . esc_attr__(
-                'Click to open the \'Help\' tab for more information about this feature.',
-                'event_espresso'
-            ) . '" > ' . $help_text . ' </a>';
+        $icon = $icon_style ? $icon_style : ' dashicons-editor-help';
+        $help_text = $help_text ? $help_text : '';
+        $link = '<a id="' . $help_tab_lnk . '"';
+        $link .= ' class="ee-clickable dashicons espresso-help-tab-lnk ee-icon-size-22' . $icon . '"';
+        $link .= ' title="' .  esc_attr__(
+            'Click to open the \'Help\' tab for more information about this feature.',
+            'event_espresso'
+        ) . '"';
+        $link .= ' > ' . $help_text . ' </a>';
+        return $link;
     }
 
 
