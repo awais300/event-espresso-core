@@ -108,9 +108,11 @@ class Extend_Events_Admin_Page extends Events_Admin_Page
                 'capability' => 'manage_options',
                 'noheader'   => true,
             ],
-        ];        // don't load these meta boxes if using the advanced editor
+        ];
+		// don't load these meta boxes if using the advanced editor
         $this->_page_config['create_new']['metaboxes'][] = '_premium_event_editor_meta_boxes';
         $this->_page_config['edit']['metaboxes'][] = '_premium_event_editor_meta_boxes';
+
         if (! $this->admin_config->useAdvancedEditor()) {
             $this->_page_config['create_new']['qtips'][] = 'EE_Event_Editor_Tips';
             $this->_page_config['edit']['qtips'][] = 'EE_Event_Editor_Tips';
