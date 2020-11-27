@@ -1,5 +1,7 @@
 <?php
 
+use EventEspresso\core\domain\services\checkout\fees\ExtraTxnFeesHandler;
+
 /**
  * Class EE_SPCO_Reg_Step_Payment_Options
  * Description
@@ -301,6 +303,8 @@ class EE_SPCO_Reg_Step_Payment_Options extends EE_SPCO_Reg_Step
             $registrations,
             $this->checkout->revisit
         );
+        $extra_txn_fees_handler = new ExtraTxnFeesHandler();
+        $extra_txn_fees_handler->applyExtraFeesToRegistrants($this->checkout->transaction, $registrations);
         foreach ($registrations as $REG_ID => $registration) {
             /** @var $registration EE_Registration */
             // has this registration lost it's space ?
@@ -883,7 +887,7 @@ class EE_SPCO_Reg_Step_Payment_Options extends EE_SPCO_Reg_Step
      *
      * @access protected
      * @param array $registrations
-     * @throws EE_Error
+     * @throws EE_Error|ReflectionException
      */
     protected function _apply_registration_payments_to_amount_owing(array $registrations)
     {
