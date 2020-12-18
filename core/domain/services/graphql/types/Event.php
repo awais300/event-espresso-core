@@ -77,7 +77,7 @@ class Event extends TypeBase
                 'ID',
                 esc_html__('The event ID.', 'event_espresso')
             ),
-            new GraphQLField(
+            new GraphQLOutputField(
                 'defaultRegStatus',
                 $this->namespace . 'RegistrationStatusEnum',
                 'default_registration_status',
