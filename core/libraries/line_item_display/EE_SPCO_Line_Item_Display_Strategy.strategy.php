@@ -366,7 +366,7 @@ class EE_SPCO_Line_Item_Display_Strategy implements EEI_Line_Item_Display
         }
         // total td
         $html .= EEH_HTML::td(
-            EEH_Template::format_currency($total, false, false),
+            EEH_Template::format_currency($total, false, false, '', 'currency-code', true),
             '',
             'item_r jst-rght'
         );
@@ -463,7 +463,10 @@ class EE_SPCO_Line_Item_Display_Strategy implements EEI_Line_Item_Display
             EEH_Template::format_currency(
                 $line_item->total(),
                 false,
-                false
+                false,
+                '',
+                '',
+                true
             ),
             '',
             'item_r jst-rght'
@@ -501,7 +504,7 @@ class EE_SPCO_Line_Item_Display_Strategy implements EEI_Line_Item_Display
             $html .= EEH_HTML::td(EEH_HTML::nbsp());
             // total td
             $html .= EEH_HTML::td(
-                EEH_Template::format_currency($line_item->total(), false, false),
+                EEH_Template::format_currency($line_item->total(), false, false, '', '', true),
                 '',
                 'total jst-rght'
             );
@@ -538,7 +541,7 @@ class EE_SPCO_Line_Item_Display_Strategy implements EEI_Line_Item_Display
             );
             // total td
             $html .= EEH_HTML::td(
-                EEH_Template::format_currency($options['sub_total'], false, false),
+                EEH_Template::format_currency($options['sub_total'], false, false, '', '', true),
                 '',
                 'total jst-rght'
             );
