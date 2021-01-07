@@ -775,9 +775,9 @@ class EE_Registrations_List_Table extends EE_Admin_List_Table
     public function column_PRC_amount(EE_Registration $item)
     {
         $ticket = $item->ticket();
-        $content = isset($_GET['event_id']) && $ticket instanceof EE_Ticket ? '<span class="TKT_name">'
-                                                                              . $ticket->name()
-                                                                              . '</span><br />' : '';
+        $content = isset($_GET['event_id']) && $ticket instanceof EE_Ticket
+            ? '<span class="TKT_name">' . $ticket->name() . '</span><br />'
+            : '';
         if ($item->final_price() > 0) {
             $content .= '<span class="reg-pad-rght">' . $item->pretty_final_price() . '</span>';
         } else {
@@ -803,9 +803,7 @@ class EE_Registrations_List_Table extends EE_Admin_List_Table
         $ticket = $item->ticket();
         $content = isset($_GET['event_id']) || ! $ticket instanceof EE_Ticket
             ? ''
-            : '<span class="TKT_name">'
-              . $ticket->name()
-              . '</span><br />';
+            : '<span class="TKT_name">' . $ticket->name() . '</span><br />';
         $content .= '<span class="reg-pad-rght">' . $item->pretty_final_price() . '</span>';
         return $content;
     }
@@ -827,10 +825,7 @@ class EE_Registrations_List_Table extends EE_Admin_List_Table
         $content = '<span class="reg-pad-rght">' . $item->pretty_paid() . '</span>';
         if ($item->paid() > 0) {
             $content .= '<br><span class="ee-status-text-small">'
-                        . sprintf(
-                            __('...via %s', 'event_espresso'),
-                            $payment_method_name
-                        )
+                        . sprintf(__('...via %s', 'event_espresso'), $payment_method_name)
                         . '</span>';
         }
         return $content;
@@ -872,7 +867,8 @@ class EE_Registrations_List_Table extends EE_Admin_List_Table
                   . esc_attr__('View Transaction', 'event_espresso')
                   . '">'
                   . $item->transaction()->pretty_total()
-                  . '</a></span>' : '<span class="reg-pad-rght">' . $item->transaction()->pretty_total() . '</span>';
+                  . '</a></span>'
+                : '<span class="reg-pad-rght">' . $item->transaction()->pretty_total() . '</span>';
         } else {
             return __("None", "event_espresso");
         }
@@ -918,7 +914,8 @@ class EE_Registrations_List_Table extends EE_Admin_List_Table
                       . esc_attr__('View Transaction', 'event_espresso')
                       . '">'
                       . $item->transaction()->pretty_paid()
-                      . '</a><span>' : '<span class="reg-pad-rght">' . $item->transaction()->pretty_paid() . '</span>';
+                      . '</a><span>'
+                    : '<span class="reg-pad-rght">' . $item->transaction()->pretty_paid() . '</span>';
             }
         }
         return '&nbsp;';
