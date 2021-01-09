@@ -16,7 +16,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * @param array  $date_formats            incoming date_formats in an array where the first value is the
      *                                        date_format and the second value is the time format
      * @return EE_Payment
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public static function new_instance($props_n_values = array(), $timezone = null, $date_formats = array())
     {
@@ -30,7 +30,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * @param string $timezone        incoming timezone as set by the model.  If not set the timezone for
      *                                the website will be used.
      * @return EE_Payment
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public static function new_instance_from_db($props_n_values = array(), $timezone = null)
     {
@@ -43,7 +43,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param int $TXN_ID
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_transaction_id($TXN_ID = 0)
     {
@@ -55,7 +55,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Gets the transaction related to this payment
      *
      * @return EE_Transaction
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function transaction()
     {
@@ -68,7 +68,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $STS_ID
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_status($STS_ID = '')
     {
@@ -81,7 +81,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param int $timestamp
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_timestamp($timestamp = 0)
     {
@@ -94,7 +94,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $PAY_source
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_source($PAY_source = '')
     {
@@ -107,10 +107,11 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param float $amount
-     * @throws \EE_Error
+     * @throws EE_Error|ReflectionException
      */
     public function set_amount($amount = 0.00)
     {
+        $amount = EEH_Template::format_currency($amount, true, false);
         $this->set('PAY_amount', (float) $amount);
     }
 
@@ -120,7 +121,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $gateway_response
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_gateway_response($gateway_response = '')
     {
@@ -133,9 +134,9 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * but since 4.6.0, payment methods are models and the payment keeps a foreign key to the payment method
      * used on it
      *
-     * @deprecated
      * @return string
-     * @throws \EE_Error
+     * @throws EE_Error
+     *@deprecated
      */
     public function gateway()
     {
@@ -156,7 +157,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $txn_id_chq_nmbr
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_txn_id_chq_nmbr($txn_id_chq_nmbr = '')
     {
@@ -169,7 +170,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $po_number
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_po_number($po_number = '')
     {
@@ -182,7 +183,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string $extra_accntng
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_extra_accntng($extra_accntng = '')
     {
@@ -195,7 +196,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param bool $via_admin
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_payment_made_via_admin($via_admin = false)
     {
@@ -212,7 +213,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @param string|array $details
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_details($details = '')
     {
@@ -229,7 +230,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Sets redirect_url
      *
      * @param string $redirect_url
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_redirect_url($redirect_url)
     {
@@ -241,7 +242,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Sets redirect_args
      *
      * @param array $redirect_args
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function set_redirect_args($redirect_args)
     {
@@ -253,7 +254,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Transaction ID
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function TXN_ID()
     {
@@ -265,7 +266,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Status
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function status()
     {
@@ -277,7 +278,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Status
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function STS_ID()
     {
@@ -292,7 +293,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * @param string $dt_frmt
      * @param string $tm_frmt
      * @return string
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function timestamp($dt_frmt = '', $tm_frmt = '')
     {
@@ -304,7 +305,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Source
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function source()
     {
@@ -317,7 +318,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @access public
      * @return float
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function amount()
     {
@@ -327,7 +328,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
 
     /**
      * @return mixed
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function amount_no_code()
     {
@@ -339,7 +340,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Gateway Response
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function gateway_response()
     {
@@ -351,7 +352,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Gateway Transaction ID
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function txn_id_chq_nmbr()
     {
@@ -363,7 +364,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Purchase Order Number
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function po_number()
     {
@@ -375,7 +376,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Extra Accounting Field
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function extra_accntng()
     {
@@ -387,7 +388,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment made via admin source
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function payment_made_via_admin()
     {
@@ -399,7 +400,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * get Payment Details
      *
      * @access public
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function details()
     {
@@ -411,7 +412,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Gets redirect_url
      *
      * @return string
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function redirect_url()
     {
@@ -423,7 +424,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Gets redirect_args
      *
      * @return array
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function redirect_args()
     {
@@ -436,7 +437,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @param bool $show_icons
      * @return void
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function e_pretty_status($show_icons = false)
     {
@@ -449,7 +450,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @param bool $show_icons
      * @return string
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function pretty_status($show_icons = false)
     {
@@ -489,7 +490,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining the status of the payment
      *
      * @return boolean whether the payment is approved or not
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_approved()
     {
@@ -504,7 +505,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * @param string $STS_ID an ID from the esp_status table/
      *                       one of the status_id_* on the EEM_Payment model
      * @return boolean whether the status of this payment equals the status id
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     protected function status_is($STS_ID)
     {
@@ -516,7 +517,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining the status of the payment
      *
      * @return boolean whether the payment is pending or not
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_pending()
     {
@@ -528,7 +529,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining the status of the payment
      *
      * @return boolean
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_cancelled()
     {
@@ -540,7 +541,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining the status of the payment
      *
      * @return boolean
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_declined()
     {
@@ -552,7 +553,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining the status of the payment
      *
      * @return boolean
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_failed()
     {
@@ -564,7 +565,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * For determining if the payment is actually a refund ( ie: has a negative value )
      *
      * @return boolean
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function is_a_refund()
     {
@@ -576,7 +577,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * Get the status object of this object
      *
      * @return EE_Status
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function status_obj()
     {
@@ -589,7 +590,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @param array $query_params @see https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
      * @return EE_Extra_Meta
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function extra_meta($query_params = array())
     {
@@ -603,7 +604,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * offline ones, dont' create payments)
      *
      * @return EE_Payment_Method
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function payment_method()
     {
@@ -622,7 +623,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @param string $inside_form_html
      * @return string html
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function redirect_form($inside_form_html = null)
     {
@@ -680,7 +681,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * and returns the html as a string
      *
      * @return string
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function redirect_args_as_inputs()
     {
@@ -768,7 +769,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      * is approved and was created during this request). False otherwise.
      *
      * @return boolean
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function just_approved()
     {
@@ -797,7 +798,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *                                (in cases where the same property may be used for different outputs
      *                                - i.e. datetime, money etc.)
      * @return mixed
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function get_pretty($field_name, $extra_cache_ref = null)
     {
@@ -813,7 +814,7 @@ class EE_Payment extends EE_Base_Class implements EEI_Payment
      *
      * @param array $query_params @see https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
      * @return EE_Registration_Payment[]
-     * @throws \EE_Error
+     * @throws EE_Error
      */
     public function registration_payments($query_params = array())
     {
