@@ -258,21 +258,16 @@
                                 } ?>
                             </div>
                             <div class="ticket-registrations-area">
-                                <h4 class="sub-section-title"><img class="icon"
-                                                                   src="<?php
-                                                                   echo EE_IMAGES_URL . 'users-16x16.png'; ?>">
-                                    <?php
-                                    echo __(
-                                        "Registration Details",
-                                        "event_espresso"
-                                    ); ?> <span class="small-text link">[ <a class="print_button noPrint"
-                                                                             href="<?php
-                                                                             echo $edit_reg_info_url; ?>">
-                                            <?php
-                                            _e(
-                                                'edit',
-                                                'event_espresso'
-                                            ); ?></a> ]</span></h4>
+                                <h4 class="sub-section-title">
+                                    <img class="icon" src="<?php echo EE_IMAGES_URL . 'users-16x16.png'; ?>">
+                                    <?php echo __("Registration Details", "event_espresso"); ?>
+                                    <span class="small-text link">[
+                                        <a class="print_button noPrint" href="<?php echo $edit_reg_info_url; ?>">
+                                            <?php _e('edit', 'event_espresso'); ?>
+                                        </a>
+                                        ]
+                                    </span>
+                                </h4>
                                 <ul class="ticket-registrations-list">
                                     <?php
                                     foreach ($registrations_per_line_item[ $line_item_id ] as $registration) {
@@ -468,17 +463,12 @@
             ?>
             <tr class="item">
                 <td class='aln-cntr' colspan="6">
-                    <?php
-                    if ($amount_owed) {
-                    ?><a class="noPrint" href='<?php
-                    echo $retry_payment_url ?>'>
-                        <?php
-                        _e(
-                            "Please make a payment.",
-                            "event_espresso"
-                        );
-                        }
-                        ?></a></td>
+                    <?php if ($amount_owed) { ?>
+                    <a class="noPrint" href='<?php echo $retry_payment_url ?>'>
+                        <?php _e("Please make a payment.", "event_espresso"); ?>
+                    </a>
+                    <?php } ?>
+                </td>
             </tr>
             </tbody>
             <tfoot>

@@ -639,9 +639,9 @@ class EEH_Template
         $link         = '<a id="' . $help_tab_lnk . '"';
         $link         .= ' class="ee-clickable dashicons espresso-help-tab-lnk ee-icon-size-22' . $icon . '"';
         $link         .= ' title="' . esc_attr__(
-                'Click to open the \'Help\' tab for more information about this feature.',
-                'event_espresso'
-            ) . '"';
+            'Click to open the \'Help\' tab for more information about this feature.',
+            'event_espresso'
+        ) . '"';
         $link         .= ' > ' . $help_text . ' </a>';
         return $link;
     }
