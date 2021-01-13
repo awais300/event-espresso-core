@@ -1224,7 +1224,8 @@ class Events_Admin_Page extends EE_Admin_Page_CPT
             $incoming_date_formats = array('Y-m-d', 'h:i a');
             $update_prices = false;
             $ticket_price = isset($data['edit_prices'][ $row ][1]['PRC_amount'])
-                ? $data['edit_prices'][ $row ][1]['PRC_amount'] : 0;
+                ? $data['edit_prices'][ $row ][1]['PRC_amount']
+                : 0;
             // trim inputs to ensure any excess whitespace is removed.
             $tkt = array_map('trim', $tkt);
             if (empty($tkt['TKT_start_date'])) {

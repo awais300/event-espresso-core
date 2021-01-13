@@ -87,7 +87,7 @@
                     <tr class="total_tr odd">
                         <td colspan="<?php echo $show_line_item_description ? 2 : 1 ?>">&nbsp;</td>
                         <td colspan="2" class="total" id="total_currency"><?php _e('Total', 'event_espresso'); ?></td>
-                        <td class="total"><?php echo $line_item->total_no_code(); ?></td>
+                        <td class="total"><?php echo $line_item->prettyTotal(); ?></td>
                     </tr>
                     <?php
                     break;
@@ -105,7 +105,7 @@
                                 'Sub-Total',
                                 'event_espresso'
                             ); ?></td>
-                        <td class="total"><?php echo $line_item->total_no_code(); ?></td>
+                        <td class="total"><?php echo $line_item->prettyTotal(); ?></td>
                     </tr>
                     <?php
                     break;
@@ -123,7 +123,7 @@
                                 'Tax Total',
                                 'event_espresso'
                             ); ?></td>
-                        <td class="total"><?php echo $line_item->total_no_code(); ?></td>
+                        <td class="total"><?php echo $line_item->prettyTotal(); ?></td>
                     </tr>
                     <?php
                     break;
@@ -141,9 +141,9 @@
                             <?php } ?>
                             <td class="item_l"><?php echo $line_item->quantity(); ?></td>
 
-                            <td class="item_c"><?php echo $line_item->unit_price_no_code() ?></td>
+                            <td class="item_c"><?php echo $line_item->prettyUnitPrice() ?></td>
 
-                            <td class="item_r"> <?php echo $line_item->total_no_code();
+                            <td class="item_r"> <?php echo $line_item->prettyTotal();
                                 echo $line_item->is_taxable() ? '*' : '' ?> </td>
                             <?php // <td class="item_l"><?php  $datetimes_strings = array(); foreach($datetimes as $datetime){ $datetimes_strings[]= $datetime->start_date_and_time();} echo implode(", ",$datetimes_strings);
                             ?>
@@ -162,8 +162,8 @@
                                 <td class="item_l"><?php echo $line_item->desc() ?></td>
                             <?php } ?>
                             <td class="item_l"><?php echo $line_item->quantity() ?></td>
-                            <td class="item_c"><?php echo $line_item->unit_price_no_code() ?></td>
-                            <td class="item_r"> <?php echo $line_item->total_no_code();
+                            <td class="item_c"><?php echo $line_item->prettyUnitPrice() ?></td>
+                            <td class="item_r"> <?php echo $line_item->prettyTotal();
                                 echo $line_item->is_taxable() ? '*' : '' ?> </td>
                             <?php // <td class="item_l"><?php  $datetimes_strings = array(); foreach($datetimes as $datetime){ $datetimes_strings[]= $datetime->start_date_and_time();} echo implode(", ",$datetimes_strings);
                             ?>
@@ -180,12 +180,14 @@
                         <?php } ?>
                         <?php if ($line_item->is_percent()) { ?>
                             <td></td>
-                            <td class="item_c"><?php echo $line_item->percent(); ?>%</td>
+                            <td class="item_c">
+                                <?php echo apply_filters('FHEE__format_percentage_value', $line_item->percent()); ?>
+                            </td>
                         <?php } else {// flat discount/surcharge ?>
                             <td></td>
-                            <td class="item_c"><?php echo $line_item->unit_price_no_code(); ?></td>
+                            <td class="item_c"><?php echo $line_item->prettyUnitPrice(); ?></td>
                         <?php } ?>
-                        <td class="item_r"><?php echo $line_item->total_no_code(); ?></td>
+                        <td class="item_r"><?php echo $line_item->prettyTotal(); ?></td>
                     </tr>
                     <?php
                     break;
@@ -196,9 +198,11 @@
                     <?php if ($show_line_item_description) { ?>
                         <td class="item_l"><?php echo $line_item->desc() ?></td>
                     <?php } ?>
-                    <td colspan="2" class="item_c"><?php echo $line_item->percent(); ?>%</td>
+                    <td colspan="2" class="item_c">
+                        <?php echo apply_filters('FHEE__format_percentage_value', $line_item->percent()); ?>
+                    </td>
 
-                    <td class="item_r"><?php echo $line_item->total_no_code(); ?></td>
+                    <td class="item_r"><?php echo $line_item->prettyTotal(); ?></td>
                     </tr><?php
                     break;
             }
