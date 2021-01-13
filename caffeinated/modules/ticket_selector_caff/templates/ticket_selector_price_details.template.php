@@ -72,7 +72,7 @@ foreach ($ticket_price_modifiers as $price_modifier) { ?>
                         <td data-th="<?php echo $name_label; ?>" class="jst-rght small-text">
                             <?php echo $price_modifier->name; ?>
                         </td>
-                        <td data-th="<?php echo $desc_label; ?>" class="small-text">
+                        <td data-th="<?php echo $desc_label; ?>" class="jst-rght small-text">
                             <?php echo $price_modifier->desc; ?>
                         </td>
                         <td data-th="<?php echo $amount_label; ?>" class="jst-rght small-text">
