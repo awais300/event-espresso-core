@@ -315,10 +315,10 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
      * Gets all the datetimes this ticket can be used for attending.
      * Unless otherwise specified, orders datetimes by start date.
      *
-     * @param array $query_params @see
-     *                            https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
+     * @param array $query_params
      * @return EE_Datetime[]|EE_Base_Class[]
      * @throws EE_Error|ReflectionException
+     * @see https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
      */
     public function datetimes($query_params = [])
     {
@@ -351,8 +351,8 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
      *                              'datetime' = total ticket sales in the datetime_ticket table.
      *                              If $dtt_id is not given then we return an array of sales indexed by datetime.
      *                              If $dtt_id IS given then we return the tickets sold for that given datetime.
-     * @param int    $dtt_id  [optional] include the dtt_id with $what = 'datetime'.
-     * @return mixed (array|int)          how many tickets have sold
+     * @param int    $dtt_id        [optional] include the dtt_id with $what = 'datetime'.
+     * @return mixed (array|int)    how many tickets have sold
      * @throws EE_Error|ReflectionException
      */
     public function tickets_sold($get_sold_for = 'ticket', $dtt_id = null)
@@ -360,7 +360,7 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
         $total        = 0;
         $tickets_sold = $this->_all_tickets_sold();
 
-        if($get_sold_for === 'ticket') {
+        if ($get_sold_for === 'ticket') {
             return $tickets_sold['ticket'];
         }
 
@@ -445,10 +445,10 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     /**
      * Gets all the prices that combine to form the final price of this ticket
      *
-     * @param array $query_params @see
-     *                            https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
+     * @param array $query_params
      * @return EE_Price[]|EE_Base_Class[]
      * @throws EE_Error|ReflectionException
+     * @see https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
      */
     public function prices($query_params = [])
     {
@@ -459,10 +459,10 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     /**
      * Gets all the ticket applicabilities (ie, relations between datetimes and tickets)
      *
-     * @param array $query_params @see
-     *                            https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
+     * @param array $query_params
      * @return EE_Datetime_Ticket|EE_Base_Class[]
      * @throws EE_Error|ReflectionException
+     * @see https://github.com/eventespresso/event-espresso-core/tree/master/docs/G--Model-System/model-query-params.md
      */
     public function datetime_tickets($query_params = [])
     {
@@ -655,14 +655,14 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     /**
      * Gets start_date
      *
-     * @param string $dt_frmt
-     * @param string $tm_frmt
+     * @param string $date_format
+     * @param string $time_format
      * @return string
      * @throws EE_Error|ReflectionException
      */
-    public function start_date($dt_frmt = '', $tm_frmt = '')
+    public function start_date($date_format = '', $time_format = '')
     {
-        return $this->_get_datetime('TKT_start_date', $dt_frmt, $tm_frmt);
+        return $this->_get_datetime('TKT_start_date', $date_format, $time_format);
     }
 
 
@@ -682,14 +682,14 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     /**
      * Gets end_date
      *
-     * @param string $dt_frmt
-     * @param string $tm_frmt
+     * @param string $date_format
+     * @param string $time_format
      * @return string
      * @throws EE_Error|ReflectionException
      */
-    public function end_date($dt_frmt = '', $tm_frmt = '')
+    public function end_date($date_format = '', $time_format = '')
     {
-        return $this->_get_datetime('TKT_end_date', $dt_frmt, $tm_frmt);
+        return $this->_get_datetime('TKT_end_date', $date_format, $time_format);
     }
 
 
@@ -761,12 +761,18 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
      * Sets price
      *
      * @param float $price
+     * @param bool  $localize
      * @return void
-     * @throws EE_Error|ReflectionException
+     * @throws EE_Error
+     * @throws ReflectionException
      */
-    public function set_price($price)
+    public function set_price($price, $localize = true)
     {
-        $this->set('TKT_price', round($price, $this->currency->dec_plc));
+        // after merge to EDTR, this will also need to check if reverse calculate is set to true,
+        // and if so, then NOT round off the ticket price as that will negatively affect calculations
+        // ie: $localize && ! $this->reverseCalculate() ? round($price, $this->currency->dec_plc) : $price;
+        $price = $localize ? round($price, $this->currency->dec_plc) : $price;
+        $this->set('TKT_price', $price);
     }
 
 
@@ -792,7 +798,7 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     public function set_sold($sold)
     {
         // sold can not go below zero
-        $sold = max(0, $sold);
+        $sold = max(0, absint($sold));
         $this->set('TKT_sold', $sold);
     }
 
@@ -1527,7 +1533,7 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
     {
         // get one datetime to use for getting the event
         $datetime = $this->first_datetime();
-        if (! $datetime instanceof \EE_Datetime) {
+        if (! $datetime instanceof EE_Datetime) {
             throw new UnexpectedEntityException(
                 $datetime,
                 'EE_Datetime',
@@ -1538,7 +1544,7 @@ class EE_Ticket extends EE_Soft_Delete_Base_Class implements EEI_Line_Item_Objec
             );
         }
         $event = $datetime->event();
-        if (! $event instanceof \EE_Event) {
+        if (! $event instanceof EE_Event) {
             throw new UnexpectedEntityException(
                 $event,
                 'EE_Event',
