@@ -4,14 +4,10 @@ namespace EventEspresso\core\libraries\rest_api;
 
 use DomainException;
 use EE_Boolean_Field;
-use EE_Capabilities;
 use EE_Datetime_Field;
 use EE_Error;
 use EE_Infinite_Integer_Field;
-use EE_Maybe_Serialized_Simple_HTML_Field;
 use EE_Model_Field_Base;
-use EE_Password_Field;
-use EE_Restriction_Generator_Base;
 use EE_Serialized_Text_Field;
 use EED_Core_Rest_Api;
 use EEM_Base;
@@ -342,7 +338,8 @@ class ModelDataTranslator
                     )
                 );
             }
-            if ($new_value !== null) {
+            if ($new_value !== null && extension_loaded('mysql')) {
+                // phpcs:disable PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
                 $new_value = mysql_to_rfc3339($new_value);
             }
         } else {

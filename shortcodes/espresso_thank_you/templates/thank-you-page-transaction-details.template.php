@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var EE_Transaction $transaction
+ * @var bool $show_try_pay_again_link
+ * @var string $SPCO_payment_options_url
+ * @var string $primary_registrant_name
+ */
+?>
 <h3><?php _e('Transaction Details', 'event_espresso'); ?></h3>
 <?php do_action('AHEE__thank_you_page_transaction_details_template__after_heading'); ?>
 
@@ -28,9 +36,11 @@
             <td>
                 <?php $transaction->e_pretty_status(true);
                 if ($show_try_pay_again_link && ! $transaction->is_completed()) { ?>
-                    &nbsp; <span class="small-text"><a href='<?php echo $SPCO_payment_options_url ?>'><?php
-                                _e('View Payment Options', 'event_espresso');
-                            ?></a></span>
+                <span class="small-text">
+                    <a href='<?php echo $SPCO_payment_options_url ?>'>
+                        <?php _e('View Payment Options', 'event_espresso'); ?>
+                    </a>
+                </span>
                 <?php } ?>
             </td>
         </tr>

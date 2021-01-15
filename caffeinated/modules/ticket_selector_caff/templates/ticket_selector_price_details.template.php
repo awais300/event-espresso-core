@@ -21,11 +21,11 @@ $ticket_price_heading = apply_filters(
     'FHEE__ticket_selector_chart_template__ticket_details_price_breakdown_heading',
     esc_html__('Price', 'event_espresso')
 );
-$name_label = esc_html__('Name', 'event_espresso');
-$desc_label = esc_html__('Description', 'event_espresso');
-$amount_label = esc_html__('Amount', 'event_espresso');
-$subtotal_label = esc_html__('subtotal', 'event_espresso');
-$total_label = apply_filters(
+$name_label           = esc_html__('Name', 'event_espresso');
+$desc_label           = esc_html__('Description', 'event_espresso');
+$amount_label         = esc_html__('Amount', 'event_espresso');
+$subtotal_label       = esc_html__('subtotal', 'event_espresso');
+$total_label          = apply_filters(
     'FHEE__ticket_selector_chart_template__ticket_details_total_price',
     esc_html__('Total', 'event_espresso')
 );
@@ -38,19 +38,13 @@ if ($display_ticket_price) { ?>
                 <thead>
                 <tr>
                     <th class="ee-third-width">
-                            <span class="small-text">
-                                <?php echo $name_label; ?>
-                            </span>
+                        <span class="small-text"><?php echo $name_label; ?></span>
                     </th>
                     <th class="jst-cntr">
-                            <span class="small-text">
-                                <?php echo $desc_label; ?>
-                            </span>
+                        <span class="small-text"><?php echo $desc_label; ?></span>
                     </th>
                     <th class="ee-fourth-width jst-rght">
-                            <span class="small-text">
-                                <?php echo $amount_label; ?>
-                            </span>
+                        <span class="small-text"><?php echo $amount_label; ?></span>
                     </th>
                 </tr>
                 </thead>
@@ -67,7 +61,7 @@ if ($display_ticket_price) { ?>
                         </td>
                     </tr>
                 <?php }
-foreach ($ticket_price_modifiers as $price_modifier) { ?>
+                foreach ($ticket_price_modifiers as $price_modifier) { ?>
                     <tr>
                         <td data-th="<?php echo $name_label; ?>" class="jst-rght small-text">
                             <?php echo $price_modifier->name; ?>
@@ -79,7 +73,7 @@ foreach ($ticket_price_modifiers as $price_modifier) { ?>
                             <?php echo $price_modifier->sub_total; ?>
                         </td>
                     </tr>
-<?php } ?>
+                <?php } ?>
                 <?php if ($display_taxes) { ?>
                     <tr>
                         <td colspan="2" class="jst-rght small-text sbttl">

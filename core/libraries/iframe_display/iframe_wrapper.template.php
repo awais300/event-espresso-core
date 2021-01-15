@@ -17,6 +17,7 @@
  * @since   4.9.0
  * @package Event Espresso
  */
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,15 +26,15 @@
     <?php if ($enqueue_wp_assets) : ?>
         <?php wp_head(); ?>
     <?php else : ?>
-        <?php foreach ($css as $url) :?>
+        <?php foreach ($css as $url) : ?>
     <link rel="stylesheet" type="text/css" href="<?php echo $url; ?>">
-        <?php endforeach; ?>
-            <script type="text/javascript">
-                <?php echo $eei18n; ?>
-            </script>
-    <?php foreach ($header_js as $key => $url) :?>
+    <?php endforeach; ?>
+    <script type="text/javascript">
+        <?php echo $eei18n; ?>
+    </script>
+    <?php foreach ($header_js as $key => $url) : ?>
     <?php $header_attributes = isset($header_js_attributes[ $key ]) ? $header_js_attributes[ $key ] : ''; ?>
-        <script type="text/javascript" src="<?php echo $url; ?>"<?php echo $header_attributes; ?>></script>
+    <script type="text/javascript" src="<?php echo $url; ?>"<?php echo $header_attributes; ?>></script>
     <?php endforeach; ?>
     <?php endif; ?>
 </head>
