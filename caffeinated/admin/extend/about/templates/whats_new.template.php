@@ -2,7 +2,8 @@
     <!-- <h3><?php echo esc_html(
         _n('Minor Release Information', 'Minor Releases', 1, 'event_espresso')
     ); ?></h3> -->
-    <h3><?php echo esc_html(
+    <h3>
+        <?php echo esc_html(
             _n('Major Release Information', 'Major Releases', 1, 'event_espresso')
         ); ?>
     </h3>

@@ -48,5 +48,4 @@ interface EnqueueAssetsInterface
      * @return void
      */
     public function enqueueAdminScripts();
-
 }

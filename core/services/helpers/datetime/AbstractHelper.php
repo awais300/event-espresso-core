@@ -176,10 +176,10 @@ abstract class AbstractHelper implements HelperInterface
             );
             ?>
         </span>
-        <?php endif; ?>
+    <?php endif; ?>
         <?php if ($check_zone_info && $timezone_string) : ?>
-            <br/>
-            <span>
+        <br/>
+        <span>
                 <?php
                 // Set TZ so localtime works.
                 date_default_timezone_set($timezone_string);
@@ -222,9 +222,9 @@ abstract class AbstractHelper implements HelperInterface
             }
             // Set back to UTC.
             date_default_timezone_set('UTC');
-        ?>
+            ?>
         </span></p>
-        <?php endif;
+    <?php endif;
     }
 
 

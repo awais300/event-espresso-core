@@ -369,9 +369,10 @@ if (WP_DEBUG) {
                     </label>
                 </div>
                 <div class="ticket-is-taxable-container">
-                    <?php if (! empty($tax_rows)) { ?>
-                    <?php if ($disabled) : ?>
-                        <?php $tax_value = ! empty($TKT_taxable) ? 1 : 0; ?>
+                    <?php
+                    if (! empty($tax_rows)) {
+                        if ($disabled) :
+                            $tax_value = ! empty($TKT_taxable) ? 1 : 0; ?>
                         <input class="TKT-taxable-checkbox"
                                type="hidden"
                                name="<?php echo $edit_tickets_name; ?>[<?php echo $tkt_row; ?>][TKT_taxable]"
@@ -383,13 +384,13 @@ if (WP_DEBUG) {
                                value="1"<?php echo $TKT_taxable; ?>
                                disabled
                         >
-                    <?php else : ?>
+                        <?php else : ?>
                         <input class="TKT-taxable-checkbox" id="edit-ticket-TKT_taxable-<?php echo $tkt_row; ?>"
                                type="checkbox"
                                name="<?php echo $edit_tickets_name; ?>[<?php echo $tkt_row; ?>][TKT_taxable]"
                                value="1"<?php echo $TKT_taxable; ?>
                         >
-                    <?php endif; ?>
+                        <?php endif; ?>
                     <label for="edit-ticket-TKT_taxable-<?php echo $tkt_row; ?>">
                         <?php esc_html_e('This ticket is taxable.', 'event_espresso'); ?>
                     </label>
