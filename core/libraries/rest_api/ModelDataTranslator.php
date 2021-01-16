@@ -2,18 +2,22 @@
 
 namespace EventEspresso\core\libraries\rest_api;
 
+use DateTime;
+use DateTimeZone;
 use DomainException;
 use EE_Boolean_Field;
 use EE_Datetime_Field;
 use EE_Error;
 use EE_Infinite_Integer_Field;
 use EE_Model_Field_Base;
+use EE_Registry;
 use EE_Serialized_Text_Field;
 use EED_Core_Rest_Api;
 use EEM_Base;
 use EventEspresso\core\exceptions\InvalidDataTypeException;
 use EventEspresso\core\exceptions\InvalidInterfaceException;
 use InvalidArgumentException;
+use ReflectionException;
 
 /**
  * Class Model_Data_Translator
@@ -51,6 +55,7 @@ class ModelDataTranslator
      * @param string              $timezone_string treat values as being in this timezone
      * @return mixed
      * @throws RestException
+     * @throws EE_Error
      */
     public static function prepareFieldValuesFromJson(
         $field_obj,
@@ -89,6 +94,7 @@ class ModelDataTranslator
      * @param mixed               $original_value_maybe_array
      * @param string              $request_version (eg 4.8.36)
      * @return array
+     * @throws EE_Error
      */
     public static function prepareFieldValuesForJson($field_obj, $original_value_maybe_array, $request_version)
     {
@@ -213,7 +219,7 @@ class ModelDataTranslator
         // need to append timezone
         list($offset_sign, $offset_secs) = self::parseTimezoneOffset(
             $datetime_field->get_timezone_offset(
-                new \DateTimeZone($timezone_string),
+                new DateTimeZone($timezone_string),
                 $original_timestamp
             )
         );
@@ -293,6 +299,7 @@ class ModelDataTranslator
      * @param mixed               $original_value
      * @param string              $requested_version
      * @return mixed
+     * @throws EE_Error
      */
     public static function prepareFieldValueForJson($field_obj, $original_value, $requested_version)
     {
@@ -302,19 +309,19 @@ class ModelDataTranslator
             if (is_string($original_value)) {
                 // did they submit a string of a unix timestamp?
                 if (is_numeric($original_value)) {
-                    $datetime_obj = new \DateTime();
+                    $datetime_obj = new DateTime();
                     $datetime_obj->setTimestamp((int) $original_value);
                 } else {
                     // first, check if its a MySQL timestamp in GMT
-                    $datetime_obj = \DateTime::createFromFormat('Y-m-d H:i:s', $original_value);
+                    $datetime_obj = DateTime::createFromFormat('Y-m-d H:i:s', $original_value);
                 }
-                if (! $datetime_obj instanceof \DateTime) {
+                if (! $datetime_obj instanceof DateTime) {
                     // so it's not a unix timestamp or a MySQL timestamp. Maybe its in the field's date/time format?
                     $datetime_obj = $field_obj->prepare_for_set($original_value);
                 }
                 $original_value = $datetime_obj;
             }
-            if ($original_value instanceof \DateTime) {
+            if ($original_value instanceof DateTime) {
                 $new_value = $original_value->format('Y-m-d H:i:s');
             } elseif (is_int($original_value) || is_float($original_value)) {
                 $new_value = date('Y-m-d H:i:s', $original_value);
@@ -323,7 +330,7 @@ class ModelDataTranslator
             } else {
                 // so it's not a datetime object, unix timestamp (as string or int),
                 // MySQL timestamp, or even a string in the field object's format. So no idea what it is
-                throw new \EE_Error(
+                throw new EE_Error(
                     sprintf(
                         esc_html__(
                         // @codingStandardsIgnoreStart
@@ -338,7 +345,7 @@ class ModelDataTranslator
                     )
                 );
             }
-            if ($new_value !== null && extension_loaded('mysql')) {
+            if ($new_value !== null) {
                 // phpcs:disable PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
                 $new_value = mysql_to_rfc3339($new_value);
             }
@@ -631,6 +638,7 @@ class ModelDataTranslator
      * @param EEM_Base $model
      * @return EE_Model_Field_Base
      * @throws EE_Error
+     * @throws ReflectionException
      */
     public static function deduceFieldFromQueryParam($query_param_name, EEM_Base $model)
     {
@@ -655,7 +663,7 @@ class ModelDataTranslator
         } else {// $number_of_parts >= 2
             // the last part is the column name, and there are only 2parts. therefore...
             $field_name = $last_query_param_part;
-            $model = \EE_Registry::instance()->load_model($query_param_parts[ $number_of_parts - 2 ]);
+            $model = EE_Registry::instance()->load_model($query_param_parts[ $number_of_parts - 2 ]);
         }
         try {
             return $model->field_settings_for($field_name, false);
