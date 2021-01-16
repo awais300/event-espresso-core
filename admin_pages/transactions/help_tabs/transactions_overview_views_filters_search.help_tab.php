@@ -8,7 +8,8 @@
 <ul>
     <li>
         <strong><?php esc_html_e('View All Transactions', 'event_espresso'); ?></strong><br/>
-        <?php printf(
+        <?php
+        printf(
             esc_html__(
                 'Shows transactions where the registrant has completed the full registration process. Transactions in this view will either have a status of: %1$s%2$s"Incomplete" meaning there are monies owing%3$s%2$s"Complete" meaning there are NO monies owing%3$s%2$s"Overpaid" meaning that monies should be refunded to the registrant.%3$s%4$s',
                 'event_espresso'
@@ -17,7 +18,8 @@
             '<li>',
             '</li>',
             '</ul>'
-        ); ?>
+        );
+        ?>
     </li>
     <li>
         <strong><?php esc_html_e('Abandoned Transactions', 'event_espresso'); ?></strong><br/>

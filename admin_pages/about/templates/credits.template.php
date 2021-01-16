@@ -92,14 +92,16 @@
 </ul>
 <h3 class="wp-people-group"><?php esc_html_e('Contributor Recognition', 'event_espresso'); ?></h3>
 <p class="description">
-    <?php printf(
+    <?php
+    printf(
         esc_html__(
             'For every major release we want to recognize the people who contributed to the release via a GitHub pull request. Want to see your name listed here? %sWhen you submit a pull request that gets included in a major release%s, we\'ll add your name here linked to your GitHub profile.',
             'event_espresso'
         ),
         '<a href="https://github.com/eventespresso/event-espresso-core" title="Contribute to Event Espresso by making a pull request via GitHub">',
         '</a>'
-    ); ?>
+    );
+    ?>
 </p>
 <div class="wp-credits-list">
     <ul>
@@ -112,14 +114,16 @@
 </div>
 <h3 class="wp-people-group"><?php esc_html_e('External Libraries', 'event_espresso'); ?></h3>
 <p class="description">
-    <?php printf(
+    <?php
+    printf(
         esc_html__(
             'Along with the libraries %sincluded with WordPress%s, Event Espresso utilizes the following third party libraries:',
             'event_espresso'
         ),
         '<a href="credits.php">',
         '</a>'
-    ); ?>
+    );
+    ?>
 </p>
 <p class="wp-credits-list">
     <a href="https://openexchangerates.github.io/accounting.js/">accounting.js</a>,

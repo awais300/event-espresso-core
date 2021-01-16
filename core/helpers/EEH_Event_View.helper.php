@@ -228,9 +228,9 @@ class EEH_Event_View extends EEH_Base
                     if (! is_wp_error($url)
                         && (($hide_uncategorized
                              && strtolower($term->name) != __(
-                                    'uncategorized',
-                                    'event_espresso'
-                                ))
+                                 'uncategorized',
+                                 'event_espresso'
+                             ))
                             || ! $hide_uncategorized)
                     ) {
                         $category_links[] = '<a href="' . esc_url($url) . '" rel="tag" '

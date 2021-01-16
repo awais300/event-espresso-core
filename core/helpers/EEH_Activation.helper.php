@@ -1305,9 +1305,9 @@ class EEH_Activation implements ResettableInterface
                 // (otherwise we might reactivate something user's intentionally deactivated.)
                 // we also skip if the message type is not installed.
                 if ($message_resource_manager->has_message_type_been_activated_for_messenger(
-                        $default_message_type_name_for_messenger,
-                        $active_messenger->name
-                    )
+                    $default_message_type_name_for_messenger,
+                    $active_messenger->name
+                )
                     || $message_resource_manager->is_message_type_active_for_messenger(
                         $active_messenger->name,
                         $default_message_type_name_for_messenger
@@ -1667,6 +1667,7 @@ class EEH_Activation implements ResettableInterface
     public static function last_wpdb_error_code()
     {
         // phpcs:disable PHPCompatibility.PHP.RemovedExtensions.mysql_DeprecatedRemoved
+        // phpcs:disable PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
         global $wpdb;
         if ($wpdb->use_mysqli) {
             return mysqli_errno($wpdb->dbh);

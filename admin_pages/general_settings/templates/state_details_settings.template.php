@@ -13,14 +13,14 @@
     <tbody>
     <?php
     if ($states) {
-    foreach ($states as $STA_ID => $state) { ?>
+        foreach ($states as $STA_ID => $state) { ?>
         <tr id="state-<?php echo $STA_ID; ?>-tr" class="country-state-columns">
-            <?php foreach ($state['inputs'] as $ID => $input) {
-                if ($ID != 'STA_ID' && $ID != 'CNT_ISO') {
-                    echo EEH_Form_Fields::generate_form_input($input);
+                <?php foreach ($state['inputs'] as $ID => $input) {
+                    if ($ID != 'STA_ID' && $ID != 'CNT_ISO') {
+                        echo EEH_Form_Fields::generate_form_input($input);
+                    }
                 }
-            }
-            ?>
+                ?>
             <td class="delete-state-td">
                 <a id="delete-state-<?php echo $STA_ID; ?>-lnk"
                    class="dashicons dashicons-post-trash ee-icon-size-20 delete-state-lnk"
@@ -31,7 +31,7 @@
                 </a>
             </td>
         </tr>
-    <?php } ?>
+        <?php } ?>
     </tbody>
 </table>
 <br/>
@@ -43,7 +43,7 @@
 />
 <br/>
 
-<?php } ?>
+    <?php } ?>
 <table class="form-table add-new-state-tbl">
     <tbody>
     <tr>

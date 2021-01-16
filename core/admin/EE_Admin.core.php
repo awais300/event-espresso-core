@@ -491,8 +491,8 @@ final class EE_Admin implements InterminableInterface
 
             <p class="button-controls">
                 <span class="list-controls">
-                    <a href="<?php
-                    echo esc_url(
+                    <?php
+                    $event_archives_url = esc_url(
                         add_query_arg(
                             [
                                 'extra-nav-menu-pages-tab' => 'event-archives',
@@ -500,8 +500,8 @@ final class EE_Admin implements InterminableInterface
                             ],
                             remove_query_arg($removed_args)
                         )
-                    );
-                    ?>#posttype-extra-nav-menu-pages" class="select-all">
+                    ); ?>
+                    <a href="<?php echo $event_archives_url; ?>#posttype-extra-nav-menu-pages" class="select-all">
                         <?php esc_html_e('Select All', 'event_espresso'); ?>
                     </a>
                 </span>

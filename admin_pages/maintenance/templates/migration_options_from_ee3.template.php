@@ -177,14 +177,16 @@
                     <td>
                         <a id="do-not-migrate" class="do-not-migrate button-primary"
                            href="<?php echo $reset_db_page_link; ?>">
-                            <?php echo apply_filters(
+                            <?php
+                            echo apply_filters(
                                 'FHEE__ee_migration_page__option_2_button_text',
                                 sprintf(
                                     esc_html__("Just Start %s and Delete Existing Data", "event_espresso"),
                                     $ultimate_db_state
                                 ),
                                 $ultimate_db_state
-                            ); ?>
+                            );
+                            ?>
                         </a>
                     </td>
                 </tr>

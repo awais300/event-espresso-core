@@ -15,6 +15,7 @@ use EventEspresso\core\interfaces\InterminableInterface;
 // phpcs:disable PHPCompatibility.PHP.RemovedConstants.mcrypt_randDeprecatedRemoved
 // phpcs:disable PHPCompatibility.Constants.RemovedConstants.mcrypt_randDeprecatedRemoved
 // phpcs:disable PHPCompatibility.PHP.DeprecatedFunctions.mcrypt_encryptDeprecatedRemoved
+// phpcs:disable PHPCompatibility.FunctionUse.RemovedFunctions.mcrypt_encryptDeprecatedRemoved
 // phpcs:disable PHPCompatibility.PHP.DeprecatedFunctions.mcrypt_decryptDeprecatedRemoved
 // phpcs:disable PHPCompatibility.FunctionUse.RemovedFunctions.mcrypt_decryptDeprecatedRemoved
 

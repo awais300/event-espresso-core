@@ -1,15 +1,16 @@
 <?php
 /**
- * @var string $fname
- * @var string $lname
- * @var string $email
- * @var string $phone
- * @var string $formatted_address
+ * @var string      $fname
+ * @var string      $lname
+ * @var string      $email
+ * @var string      $phone
+ * @var string      $formatted_address
  * @var EE_Attendee $att_check
- * @var string $att_edit_link
- * @var string $att_edit_label
- * @var string $create_label
+ * @var string      $att_edit_link
+ * @var string      $att_edit_label
+ * @var string      $create_label
  */
+
 ?>
 <div id="admin-side-mbox-primary-registrant-dv" class="admin-side-mbox-dv">
     <div class="clearfix">
@@ -47,8 +48,9 @@
 
 
 <div class="contact-details-buttons">
-    <?php if ($att_check instanceof EE_Attendee
-              && EE_Registry::instance()->CAP->current_user_can(
+    <?php
+    if ($att_check instanceof EE_Attendee
+        && EE_Registry::instance()->CAP->current_user_can(
             'ee_edit_contact',
             'view_or_edit_contact_button',
             $att_check->ID()
@@ -59,16 +61,20 @@
             <span class="ee-icon ee-icon-user-edit"></span><?php echo $att_edit_label; ?>
         </a>
         <?php if (! empty($create_link)) : ?>
-        <a class="button button-small"
-           href="<?php echo $create_link; ?>"
-           title="<?php esc_attr_e(
-               'This registration shares the contact details for the primary registration in this group.  If you\'d like this registration to have its own details, you can do so by clicking this button',
-               'event_espresso'
-           ); ?>"
-        >
-            <span class="ee-icon ee-icon-user-add-new"></span><?php echo $create_label; ?>
-        </a>
-    <?php endif; ?>
+            <a class="button button-small"
+               href="<?php echo $create_link; ?>"
+               title="<?php
+                // phpcs:disable Generic.WhiteSpace.ScopeIndent.Incorrect
+                esc_attr_e(
+                    'This registration shares the contact details for the primary registration in this group.  If you\'d like this registration to have its own details, you can do so by clicking this button',
+                    'event_espresso'
+                );
+                // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+                ?>"
+            >
+                <span class="ee-icon ee-icon-user-add-new"></span><?php echo $create_label; ?>
+            </a>
+        <?php endif; ?>
         <div style="clear:both"></div>
     <?php endif; ?>
 </div>

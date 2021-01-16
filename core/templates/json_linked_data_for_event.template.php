@@ -40,13 +40,13 @@ defined('EVENT_ESPRESSO_VERSION') || exit;
       "price": "<?php echo $ticket['price']; ?>",
       "priceCurrency": "<?php echo $currency; ?>"
         <?php if (isset($ticket['availability'])) {
-        ?>,"availability": "http://schema.org/<?php echo $ticket['availability']; ?>"
+            ?>,"availability": "http://schema.org/<?php echo $ticket['availability']; ?>"
         <?php } ?>
     }<?php
         $i++;
-        if ($i < count($event_tickets)) {
-            echo ',';
-        }
+    if ($i < count($event_tickets)) {
+        echo ',';
+    }
     }
     ?>
     ]<?php
@@ -63,13 +63,13 @@ defined('EVENT_ESPRESSO_VERSION') || exit;
       "streetAddress": "<?php echo wp_json_encode($venue_address); ?>"
     }
   }
-    <?php
+        <?php
     } ?>
     <?php
     if ($event_image) {
         ?>,
   "image": "<?php echo $event_image; ?>"
-    <?php
+        <?php
     } ?>
     <?php do_action('AHEE__json_linked_data_for_event__template'); ?>
 }

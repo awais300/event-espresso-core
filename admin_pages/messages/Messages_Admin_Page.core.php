@@ -3619,9 +3619,9 @@ class Messages_Admin_Page extends EE_Admin_Page
     {
         $form = $this->_generate_global_settings_form();
         echo $form->form_open(
-                $this->add_query_args_and_nonce(['action' => 'update_global_settings'], EE_MSG_ADMIN_URL),
-                'POST'
-            )
+            $this->add_query_args_and_nonce(['action' => 'update_global_settings'], EE_MSG_ADMIN_URL),
+            'POST'
+        )
              . $form->get_html()
              . $form->form_close();
     }
@@ -4060,9 +4060,9 @@ class Messages_Admin_Page extends EE_Admin_Page
         foreach ($message_types_to_activate as $message_type_name) {
             $message_type = $this->_message_resource_manager->get_message_type($message_type_name);
             if ($this->_message_resource_manager->is_message_type_active_for_messenger(
-                    $messenger_name,
-                    $message_type_name
-                )
+                $messenger_name,
+                $message_type_name
+            )
                 && $message_type instanceof EE_message_type
             ) {
                 $this->_template_args['data']['active_mts'][] = $message_type_name;
@@ -4262,17 +4262,17 @@ class Messages_Admin_Page extends EE_Admin_Page
                 EE_Error::add_error(
                     $message_type instanceof EE_message_type
                         ? sprintf(
-                        esc_html__(
-                            '%s message type was not successfully activated with the %s messenger',
-                            'event_espresso'
-                        ),
-                        ucwords($message_type->label['singular']),
-                        ucwords($messenger->label['singular'])
-                    )
+                            esc_html__(
+                                '%s message type was not successfully activated with the %s messenger',
+                                'event_espresso'
+                            ),
+                            ucwords($message_type->label['singular']),
+                            ucwords($messenger->label['singular'])
+                        )
                         : sprintf(
-                        esc_html__('%s messenger was not successfully activated', 'event_espresso'),
-                        ucwords($messenger->label['singular'])
-                    ),
+                            esc_html__('%s messenger was not successfully activated', 'event_espresso'),
+                            ucwords($messenger->label['singular'])
+                        ),
                     __FILE__,
                     __FUNCTION__,
                     __LINE__

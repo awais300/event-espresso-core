@@ -9,16 +9,20 @@
         </p>
     <?php else : ?>
         <p class="active-on-message <?php echo $hide_on_message; ?>">
-            <?php printf(
+            <?php
+            printf(
                 esc_html__(
                     'Below are message types that are currently %sactive%s with this messenger. Drag them over to the "Inactive Message Types" box to deactivate them.',
                     'event_espresso'
                 ),
                 '<strong>',
                 '</strong>'
-            ); ?>
+            );
+            ?>
         <p>
-        <div <?php if ($active) : ?> id="active-message-types"<?php endif; ?>
+        <div <?php if ($active) : ?>
+            id="active-message-types"
+             <?php endif; ?>
             class="mt-tab-container <?php echo $hide_on_message; ?>">
             <ul class="messenger-activation">
                 <?php echo $active_message_types; ?>
