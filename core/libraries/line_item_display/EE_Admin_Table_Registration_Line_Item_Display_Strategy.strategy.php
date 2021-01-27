@@ -130,10 +130,11 @@ class EE_Admin_Table_Registration_Line_Item_Display_Strategy extends EE_Admin_Ta
         $type_html .= $this->_get_cancellations($line_item);
         $type_html .= $line_item->OBJ_type() ? '<br />' : '';
         $code      = $line_item_related_object instanceof EEI_Has_Code ? $line_item_related_object->code() : '';
-        $type_html .= ! empty($code) ? '<span class="ee-line-item-id">' . sprintf(
-                esc_html__('Code: %s', 'event_espresso'),
-                $code
-            ) . '</span>' : '';
+        $type_html .= ! empty($code)
+            ? '<span class="ee-line-item-id">'
+              . sprintf(esc_html__('Code: %s', 'event_espresso'), $code)
+              . '</span>'
+            : '';
         $html      .= EEH_HTML::td($type_html, '', 'jst-left');
 
         // Date column
