@@ -732,12 +732,13 @@ class EE_Dependency_Map
             'EventEspresso\core\services\loaders\ObjectIdentifier'                                                        => array(
                 'EventEspresso\core\services\loaders\ClassInterfaceCache' => EE_Dependency_Map::load_from_cache,
             ),
-            'EventEspresso\core\domain\services\assets\CoreAssetManager'                                                  => array(
-                'EventEspresso\core\services\assets\AssetCollection' => EE_Dependency_Map::load_from_cache,
-                'EE_Currency_Config'                                 => EE_Dependency_Map::load_from_cache,
-                'EE_Template_Config'                                 => EE_Dependency_Map::load_from_cache,
-                'EventEspresso\core\domain\Domain'                   => EE_Dependency_Map::load_from_cache,
-                'EventEspresso\core\services\assets\Registry'        => EE_Dependency_Map::load_from_cache,
+            'EventEspresso\core\domain\services\assets\CoreAssetManager' => array(
+                'EventEspresso\core\services\assets\AssetCollection'       => EE_Dependency_Map::load_from_cache,
+                'EEM_Country'                                              => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\services\formatters\CurrencyFormatter' => EE_Dependency_Map::load_from_cache,
+                'EE_Template_Config'                                       => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\domain\Domain'                         => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\services\assets\Registry'              => EE_Dependency_Map::load_from_cache,
             ),
             'EventEspresso\core\domain\services\admin\privacy\policy\PrivacyPolicy' => array(
                 'EEM_Payment_Method' => EE_Dependency_Map::load_from_cache,
@@ -845,6 +846,7 @@ class EE_Dependency_Map
                 'EE_Core_Config'                                          => EE_Dependency_Map::load_from_cache,
                 'EE_Network_Core_Config'                                  => EE_Dependency_Map::load_from_cache,
                 'EventEspresso\core\services\address\CountrySubRegionDao' => EE_Dependency_Map::load_from_cache,
+                'EE_Currency_Config'                                      => EE_Dependency_Map::load_from_cache,
             ),
             'EventEspresso\core\services\address\CountrySubRegionDao' => array(
                 'EEM_State'                                            => EE_Dependency_Map::load_from_cache,
@@ -899,7 +901,23 @@ class EE_Dependency_Map
             ],
             'EventEspresso\core\domain\services\admin\events\data\ConfirmDeletion' => [
                 'EventEspresso\core\services\orm\tree_traversal\NodeGroupDao' => EE_Dependency_Map::load_from_cache,
-            ]
+			],
+            'EventEspresso\core\services\locale\Locales'                   => [
+                'EventEspresso\core\services\locale\DefaultLocaleData' => EE_Dependency_Map::load_from_cache,
+                'EventEspresso\core\services\locale\LocaleSwitcher' => EE_Dependency_Map::load_from_cache,
+            ],
+            'EventEspresso\core\services\locale\DefaultLocaleData'                   => [
+                'EE_Currency_Config' => EE_Dependency_Map::load_from_cache,
+            ],
+            'EventEspresso\core\services\formatters\CurrencyFormatter' => [
+                'EventEspresso\core\services\locale\Locales' => EE_Dependency_Map::load_from_cache,
+            ],
+            'EventEspresso\core\services\formatters\NumberFormatter'       => [
+                'EventEspresso\core\services\locale\Locales' => EE_Dependency_Map::load_from_cache,
+            ],
+            'EventEspresso\core\services\calculators\LineItemCalculator'   => [
+                'EventEspresso\core\services\formatters\CurrencyFormatter' => EE_Dependency_Map::load_from_cache,
+            ],
         );
     }
 
