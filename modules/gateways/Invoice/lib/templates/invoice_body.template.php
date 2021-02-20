@@ -220,7 +220,7 @@
                 <td class="item_l"><?php echo $registration->ticket()->name() ?></td>
                 <td class="item_l"><?php $datetimes = $registration->ticket()->datetimes(); $datetimes_strings = array(); foreach($datetimes as $datetime){ $datetimes_strings[]= $datetime->start_date_and_time();} echo implode(", ",$datetimes_strings); ?></td>
                 <td class="item_l"><?php echo $registration->attendee()->full_name() ?></td>
-                <td class="item_r"><?php echo EEH_Template::format_currency($registration->final_price())?></td>
+                <td class="item_r"><?php echo EEH_Money::formatForLocale($registration->final_price())?></td>
             </tr>
         <?php } */ ?>
         </tbody>
@@ -235,8 +235,8 @@
             <th class='left datetime_th'><?php _e("Date", 'event_espresso') ?></th>
             <th><span class=""><?php _e('Transaction Id / Cheque #', 'event_espresso'); ?></span></th>
             <th><span class=""><?php _e('P.O. / S.O.#', 'event_espresso'); ?></span></th>
-            <th><span class=""><?php _e('Status', 'event_espresso'); ?></span></th>
-            <th><?php _e('Amount', 'event_espresso'); ?></th>
+            <th><span class="item_c"><?php _e('Status', 'event_espresso'); ?></span></th>
+            <th><span class='item_r'><?php _e('Amount', 'event_espresso'); ?></span></th>
         </tr>
         </thead>
         <tbody>
@@ -251,8 +251,8 @@
                     <td><?php echo $payment->timestamp('D M j, Y') ?></td>
                     <td><?php $payment->e('PAY_txn_id_chq_nmbr') ?></td>
                     <td><?php $payment->e('PAY_po_number') ?></td>
-                    <td><?php $payment->e_pretty_status() ?></td>
-                    <td class='item_r'><?php echo EEH_Template::format_currency($payment->amount()); ?></td>
+                    <td class='item_c'><?php $payment->e_pretty_status() ?></td>
+                    <td class='item_r'><?php echo EEH_Money::formatForLocale($payment->amount()); ?></td>
                 </tr>
             <?php }
         } else {
@@ -271,13 +271,13 @@
         <tr class='total_tr'>
             <td colspan="4"></td>
             <td class="item_r"><?php _e('Total Paid', 'event_espresso') ?></td>
-            <td class="item_r"><?php echo EEH_Template::format_currency($amount_pd) ?> </td>
+            <td class="item_r"><?php echo EEH_Money::formatForLocale($amount_pd) ?> </td>
         </tr>
         <?php // echo $discount; ?>
         <tr class="total_tr">
             <td colspan="4"></td>
-            <td class="total" id="total_currency"><?php _e('Amount Owed', 'event_espresso'); ?></td>
-            <td class="total"><?php echo EEH_Template::format_currency($total_cost - $amount_pd) ?></td>
+            <td class="total item_r" id="total_currency"><?php _e('Amount Owed', 'event_espresso'); ?></td>
+            <td class="total item_r"><?php echo EEH_Money::formatForLocale($total_cost - $amount_pd) ?></td>
         </tr>
         </tfoot>
     </table>

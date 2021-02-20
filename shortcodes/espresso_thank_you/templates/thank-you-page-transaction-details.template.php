@@ -17,7 +17,7 @@
                 <label><?php _e('Total Cost: ', 'event_espresso'); ?></label>
             </td>
             <td>
-                <?php echo EEH_Template::format_currency($transaction->total()); ?>
+                <?php echo EEH_Money::formatForLocale($transaction->total(), '', 4); ?>
             </td>
         </tr>
         <tr>
@@ -26,7 +26,7 @@
             </td>
             <td class="<?php echo ($transaction->paid() == $transaction->total()) ? 'ee-transaction-paid'
                 : 'ee-transaction-unpaid' ?>">
-                <?php echo EEH_Template::format_currency($transaction->remaining()); ?>
+                <?php echo EEH_Money::formatForLocale($transaction->remaining()); ?>
             </td>
         </tr>
         <tr>

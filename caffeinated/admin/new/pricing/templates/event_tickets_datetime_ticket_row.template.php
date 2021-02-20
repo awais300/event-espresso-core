@@ -3,56 +3,65 @@
 /**
  * template args in use
  *
- * @var $tkt_row
- * @var $tkt_status_class
- * @var $TKT_name
- * @var $TKT_start_date
- * @var $TKT_end_date
- * @var $TKT_status
- * @var $TKT_price
- * @var $TKT_qty
- * @var $TKT_uses
- * @var $TKT_min
- * @var $TKT_max
- * @var $TKT_sold
- * @var $TKT_qty_for_input
- * @var $TKT_registrations
- * @var $TKT_ID
- * @var $TKT_description
- * @var $TKT_is_default
- * @var $TKT_price_rows
- * @var $TKT_base_price
- * @var $TKT_base_price_ID
- * @var $TKT_order
- * @var $disabled
- * @var $ticket_archive_class
- * @var $trash_icon
- * @var $trash_hidden
- * @var $clone_icon
- * @var $display_edit_tkt_row
- * @var $edit_tkt_expanded
- *
- * @var $TKT_taxable
- * @var $display_subtotal
- * @var $TKT_subtotal_amount
- * @var $tax_rows
- *
- * @var $show_price_modifier;
- * @var $total_price_rows
- * @var $ticket_datetimes_list
- * @var $starting_ticket_datetime_rows (datetimes attached to ticket on page load)
- * @var $existing_ticket_price_ids;
- * @var $ticket_template_id;
- * @var $show_price_modifier
- * @var $show_price_mod_button
- * @var $edit_tickets_name
+ * @var string $tkt_row
+ * @var string $tkt_status_class
+ * @var string $TKT_name
+ * @var string $TKT_start_date
+ * @var string $TKT_end_date
+ * @var string $TKT_status
+ * @var string $TKT_price
+ * @var string $TKT_price_code
+ * @var string $TKT_qty
+ * @var string $TKT_uses
+ * @var string $TKT_min
+ * @var string $TKT_max
+ * @var string $TKT_sold
+ * @var string $TKT_qty_for_input
+ * @var string $TKT_registrations
+ * @var string $TKT_ID
+ * @var string $TKT_description
+ * @var string $TKT_is_default
+ * @var string $TKT_price_rows
+ * @var string $TKT_base_price
+ * @var string $TKT_base_price_ID
+ * @var string $TKT_order
+ * @var string $TKT_reserved
+ * @var bool   $TKT_required
+ * @var string $TKT_price_amount
+ * @var string $ticket_price_rows
+ * @var string $ticket_archive_class
+ * @var string $trash_icon
+ * @var string $trash_hidden
+ * @var string $clone_icon
+ * @var string $disabled
+ * @var string $display_edit_tkt_row
+ * @var string $edit_tkt_expanded
+ * @var string $TKT_subtotal_amount_display
+ * @var bool   $TKT_taxable
+ * @var bool   $display_subtotal
+ * @var string $TKT_subtotal_amount
+ * @var string $tax_rows
+ * @var bool   $show_price_modifier;
+ * @var string $total_price_rows
+ * @var string $ticket_datetime_rows
+ * @var string $ticket_datetimes_list
+ * @var string $starting_ticket_datetime_rows (datetimes attached to ticket on page load)
+ * @var string $existing_ticket_price_ids;
+ * @var string $ticket_template_id;
+ * @var bool   $show_price_modifier
+ * @var bool   $show_price_mod_button
+ * @var string $edit_tickets_name
  */
 ?>
 <tr valign="top" class="ee-ticket-sortable ticket-row<?php echo $ticket_archive_class;
 if (WP_DEBUG) {
     echo ' ee-wp-debug';
 } ?>" id="display-ticketrow-<?php echo $tkt_row; ?>">
-    <!--<td class="ee-tkt-order-field"><span class="dashicons dashicons-sort<?php echo $tkt_status_class; ?>"><input type="hidden" name="<?php echo $edit_tickets_name; ?>[<?php echo $tkt_row; ?>][TKT_order]" class="edit-ticket-TKT_order" value ="<?php echo $TKT_order; ?>" ></span></td>-->
+    <!--
+    <td class="ee-tkt-order-field"><span class="dashicons dashicons-sort<?php echo $tkt_status_class; ?>">
+    <input type="hidden" name="<?php echo $edit_tickets_name; ?>[<?php echo $tkt_row; ?>][TKT_order]" class="edit-ticket-TKT_order" value ="<?php echo $TKT_order; ?>" ></span>
+    </td>
+    -->
     <td class="ee-tkt-order-field">
         <span class="ee-status-strip-td ee-status-strip<?php echo $tkt_status_class; ?>"></span>
         <input type="hidden"

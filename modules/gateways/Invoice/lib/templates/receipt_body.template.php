@@ -401,7 +401,7 @@
             <?php
             printf(
                 __("Grand Total: %s", "event_espresso"),
-                EEH_Template::format_currency($total_cost)
+                EEH_Money::formatForLocale($total_cost)
             ); ?></h2>
     </div>
     <div class="payment-dv">
@@ -477,7 +477,7 @@
                     <?php esc_html_e('Total Paid', 'event_espresso') ?>
                 </td>
                 <td class="item_r">
-                    <?php echo EEH_Template::format_currency($amount_pd, false, false) ?>
+                    <?php echo EEH_Money::formatForLocale($amount_pd) ?>
                 </td>
             </tr>
             <?php
@@ -488,7 +488,7 @@
                     <?php esc_html_e('Amount Owed:', 'event_espresso'); ?>
                 </td>
                 <td class="total">
-                    <?php echo EEH_Template::format_currency($amount_owed) ?>
+                    <?php echo EEH_Money::formatForLocale($amount_owed) ?>
                 </td>
             </tr>
             </tfoot>
