@@ -1,6 +1,7 @@
 <?php
 
 use EventEspresso\core\domain\DomainFactory;
+use EventEspresso\core\interfaces\InterminableInterface;
 use EventEspresso\core\services\loaders\ClassInterfaceCache;
 use EventEspresso\core\services\loaders\LoaderFactory;
 use EventEspresso\core\services\loaders\LoaderInterface;
@@ -17,7 +18,7 @@ use EventEspresso\core\services\request\ResponseInterface;
  * @author        Brent Christensen
  * @since         4.9.0
  */
-class EE_Dependency_Map
+class EE_Dependency_Map implements InterminableInterface
 {
 
     /**
@@ -299,7 +300,7 @@ class EE_Dependency_Map
         if (strpos($class_name, 'EEM_') === 0) {
             $class_name = 'LEGACY_MODELS';
         }
-        return isset($this->_dependency_map[ $class_name ]) ? true : false;
+        return isset($this->_dependency_map[ $class_name ]);
     }
 
 
@@ -317,9 +318,7 @@ class EE_Dependency_Map
             $class_name = 'LEGACY_MODELS';
         }
         $dependency = $this->getFqnForAlias($dependency, $class_name);
-        return isset($this->_dependency_map[ $class_name ][ $dependency ])
-            ? true
-            : false;
+        return isset($this->_dependency_map[ $class_name ][ $dependency ]);
     }
 
 
@@ -919,6 +918,7 @@ class EE_Dependency_Map
                 'EventEspresso\core\services\formatters\CurrencyFormatter' => EE_Dependency_Map::load_from_cache,
             ],
         );
+        do_action('AHEE__EE_Dependency_Map___register_core_dependencies', $this);
     }
 
 
@@ -1051,6 +1051,7 @@ class EE_Dependency_Map
                 return EE_Config::instance()->environment;
             },
         );
+        do_action('AHEE__EE_Dependency_Map___register_core_class_loaders', $this);
     }
 
 
@@ -1115,6 +1116,7 @@ class EE_Dependency_Map
                 'EventEspresso\core\services\notices\NoticeConverterInterface'
             );
         }
+        do_action('AHEE__EE_Dependency_Map___register_core_aliases', $this);
     }
 
 
