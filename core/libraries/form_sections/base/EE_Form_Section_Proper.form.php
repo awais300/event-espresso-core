@@ -264,9 +264,7 @@ class EE_Form_Section_Proper extends EE_Form_Section_Validatable
     protected function getCachedRequest($req_data = null)
     {
         if ($this->cached_request_data === null
-            || (
-                $req_data !== null && $req_data !== $this->cached_request_data
-            )
+            || ($this->cached_request_data !== $req_data && $req_data !== null)
         ) {
             $req_data = apply_filters(
                 'FHEE__EE_Form_Section_Proper__receive_form_submission__req_data',
@@ -345,11 +343,13 @@ class EE_Form_Section_Proper extends EE_Form_Section_Validatable
      */
     protected function store_submitted_form_data_in_session()
     {
-        return EE_Registry::instance()->SSN->set_session_data(
-            [
-                EE_Form_Section_Proper::SUBMITTED_FORM_DATA_SSN_KEY => $this->submitted_values(true),
-            ]
-        );
+        return EE_Registry::instance()->SSN instanceof EE_Session
+            ? EE_Registry::instance()->SSN->set_session_data(
+                [
+                    EE_Form_Section_Proper::SUBMITTED_FORM_DATA_SSN_KEY => $this->submitted_values(true),
+                ]
+            )
+            : false;
     }
 
 
@@ -364,13 +364,11 @@ class EE_Form_Section_Proper extends EE_Form_Section_Validatable
      */
     protected function get_submitted_form_data_from_session()
     {
-        $session = EE_Registry::instance()->SSN;
-        if ($session instanceof EE_Session) {
-            return $session->get_session_data(
+        return EE_Registry::instance()->SSN instanceof EE_Session
+            ? EE_Registry::instance()->SSN->get_session_data(
                 EE_Form_Section_Proper::SUBMITTED_FORM_DATA_SSN_KEY
-            );
-        }
-        return [];
+            )
+            : [];
     }
 
 
@@ -384,9 +382,11 @@ class EE_Form_Section_Proper extends EE_Form_Section_Validatable
      */
     public static function flush_submitted_form_data_from_session()
     {
-        return EE_Registry::instance()->SSN->reset_data(
-            [EE_Form_Section_Proper::SUBMITTED_FORM_DATA_SSN_KEY]
-        );
+        return EE_Registry::instance()->SSN instanceof EE_Session
+            ? EE_Registry::instance()->SSN->reset_data(
+                [EE_Form_Section_Proper::SUBMITTED_FORM_DATA_SSN_KEY]
+            )
+            : false;
     }
 
 
