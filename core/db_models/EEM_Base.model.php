@@ -1414,6 +1414,7 @@ abstract class EEM_Base extends EE_Base implements ResettableInterface
      */
     public function set_timezone($timezone)
     {
+        $timezone = EEH_DTT_Helper::get_valid_timezone_string($timezone);
         if ($timezone !== null) {
             $this->_timezone = $timezone;
         }
@@ -5214,8 +5215,12 @@ abstract class EEM_Base extends EE_Base implements ResettableInterface
             $this_model_fields_and_values[ $field_name ] = $field_obj->get_default_value();
         }
         $className = $this->_get_class_name();
-        $classInstance = EE_Registry::instance()
-                                    ->load_class($className, array($this_model_fields_and_values), false, false);
+        $classInstance = EE_Registry::instance()->load_class(
+            $className,
+            array($this_model_fields_and_values),
+            false,
+            false
+        );
         return $classInstance;
     }
 
