@@ -1159,7 +1159,7 @@ var ee_settings = {"wp_debug":"' . WP_DEBUG . '"};
      * @return void
      * @throws InvalidDataTypeException
      */
-    public static function add_persistent_admin_notice($pan_name = '', $pan_message, $force_update = false)
+    public static function add_persistent_admin_notice($pan_name, $pan_message, $force_update = false)
     {
         new PersistentAdminNotice(
             $pan_name,
