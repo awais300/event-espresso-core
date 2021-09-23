@@ -65,8 +65,9 @@ class PersistentAdminNoticeManager
      * @param RequestInterface          $request
      * @throws InvalidDataTypeException
      */
-    public function __construct($return_url = '', CapabilitiesChecker $capabilities_checker, RequestInterface $request)
+    public function __construct($return_url, CapabilitiesChecker $capabilities_checker, RequestInterface $request)
     {
+        $return_url = ! empty($return_url) ?: '';
         $this->setReturnUrl($return_url);
         $this->capabilities_checker = $capabilities_checker;
         $this->request = $request;
