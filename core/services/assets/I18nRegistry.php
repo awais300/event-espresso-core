@@ -60,7 +60,7 @@ class I18nRegistry
      *                            'translation-map.json'.
      * @param DomainInterface $domain
      */
-    public function __construct(array $i18n_map = array(), DomainInterface $domain)
+    public function __construct(array $i18n_map, DomainInterface $domain)
     {
         $this->domain = $domain;
         $this->setI18nMap($i18n_map);

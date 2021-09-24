@@ -96,7 +96,7 @@ class ModelFieldFactory
         $table_column,
         $nice_name,
         $nullable,
-        $default_value = null,
+        $default_value,
         $model_name
     ) {
         return $this->loader->getNew(
@@ -227,7 +227,7 @@ class ModelFieldFactory
         $table_column,
         $nice_name,
         $nullable,
-        $default_value = null,
+        $default_value,
         array $allowed_enum_values
     ) {
         return $this->loader->getNew(
