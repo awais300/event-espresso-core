@@ -1203,6 +1203,7 @@ final class EE_System implements ResettableInterface
             || $this->request->isWordPressApi()
         ) {
             try {
+                $this->loader->getShared('EventEspresso\core\services\assets\I18nRegistry', [[]]);
                 $this->loader->getShared('EventEspresso\core\services\assets\Registry');
                 $this->loader->getShared('EventEspresso\core\domain\services\assets\CoreAssetManager');
                 if ($this->canLoadBlocks()) {
