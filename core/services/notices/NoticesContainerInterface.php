@@ -42,7 +42,7 @@ interface NoticesContainerInterface
      * @param string $func
      * @param string $line
      */
-    public function addError($notice, $dismissible = true, $file, $func, $line);
+    public function addError($notice, $dismissible = true, $file = '', $func = '', $line = '');
 
 
 
