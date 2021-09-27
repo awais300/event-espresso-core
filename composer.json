@@ -34,14 +34,15 @@
 	],
 	"require-dev": {
 		"eventespresso/ee-coding-standards": "dev-master",
-		"roave/security-advisories": "dev-master",
-		"yoast/phpunit-polyfills": "^1.0"
+		"roave/security-advisories": "dev-master"
 	},
 	"require": {
 		"composer/installers": "~1.0",
 		"php": ">=7.1",
-		"ext-json": "*"
-	},
+		"ext-json": "*",
+		"ext-openssl": "*",
+		"ext-mbstring": "*"
+    },
 	"scripts": {
 		"config-eventespressocs": [
 			"\"vendor/bin/phpcs\" --config-set installed_paths ../../../vendor/wp-coding-standards/wpcs,../../../vendor/wimg/php-compatibility,../../../vendor/eventespresso/ee-coding-standards",
