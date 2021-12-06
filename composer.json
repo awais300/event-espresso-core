@@ -35,11 +35,10 @@
 	"require-dev": {
 		"eventespresso/ee-coding-standards": "dev-master",
 		"roave/security-advisories": "dev-master",
-		"yoast/phpunit-polyfills": "^1.0",
-		"phpunit/phpunit": "^7.5"
+		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"require": {
-		"composer/installers": "~1.0",
+		"composer/installers": "~2.0",
 		"ext-json": "*",
 		"ext-openssl": "*",
 		"ext-mbstring": "*"
