@@ -49,6 +49,12 @@ jobs:
           password: root
           host: localhost
 
+      # run PHPUNIT from the vendor folder for PHP 8+
+      - name: Run PHP Unit Tests
+        run: phpunit --configuration tests/phpunit.xml
+        # Allow failure for PHP 8.x
+        continue-on-error: ${{ startsWith( matrix.php-version, '8.' ) }}
+
 #        # run PHPUNIT from the vendor folder for PHP 8+
 #      - if: ${{ matrix.php-versions == '8.0' || matrix.php-versions == '8.1' }}
 #        name: Run PHP Unit Tests
@@ -60,18 +66,12 @@ jobs:
 #        name: Run PHP Unit Tests
 #        run: phpunit --configuration tests/phpunit.xml
 
-      # run PHPUNIT from the vendor folder for PHP 8+
-      - name: Run PHP Unit Tests
-        run: phpunit --configuration tests/phpunit.xml
-        # Allow failure for PHP 8.x
-        continue-on-error: ${{ startsWith( matrix.php-version, '8.' ) }}
-
       # run multisite test only with 1 PHP version
       - if: ${{ matrix.php-version == '7.4' }}
         name: Run PHP Unit Tests - WP Multisite
         env:
           WP_MULTISITE: 1
-        run: phpunit --configuration tests/phpunit.xml
+        run: composer update -W && phpunit --configuration tests/phpunit.xml
 
   js-lint-and-build:
     name: JS Lint/Build
