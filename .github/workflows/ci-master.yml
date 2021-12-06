@@ -59,7 +59,7 @@ jobs:
         name: Run PHP Unit Tests - WP Multisite
         env:
           WP_MULTISITE: 1
-        run: composer update -W && phpunit --configuration tests/phpunit.xml
+        run: phpunit --configuration tests/phpunit.xml
 
   js-lint-and-build:
     name: JS Lint/Build
