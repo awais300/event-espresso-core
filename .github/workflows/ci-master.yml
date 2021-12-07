@@ -22,6 +22,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           php-tools: composer:v2
+          composer-options: '--optimize-autoloader --ignore-platform-reqs --with-dependencies'
 
       - name: PHP Lint
         run: composer config-eventespressocs && composer run-script lint:skip-warnings
@@ -41,6 +42,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           php-tools: composer:v2, phpunit:v7
+          composer-options: '--optimize-autoloader --ignore-platform-reqs --with-dependencies'
 
       - name: Install WP Tests
         uses: eventespresso/actions/packages/install-wp-tests@main
