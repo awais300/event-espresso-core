@@ -41,7 +41,7 @@ jobs:
         uses: eventespresso/actions/packages/checkout-and-LAMP@main
         with:
           php-version: ${{ matrix.php-version }}
-          php-tools: composer:v2, phpunit, phpunit-polyfills
+          php-tools: composer:v2, phpunit:v7, phpunit-polyfills
           composer-options: '--optimize-autoloader --ignore-platform-reqs --with-dependencies'
 
       - name: Install WP Tests
