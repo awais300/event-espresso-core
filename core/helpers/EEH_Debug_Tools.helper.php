@@ -417,12 +417,12 @@ class EEH_Debug_Tools
     }
 
 
-    protected static function headingSpacer($heading_tag)
-    {
-        return EEH_Debug_Tools::plainOutput() && ($heading_tag === 'h1' || $heading_tag === 'h2')
-            ? "\n"
-            : '';
-    }
+    // protected static function headingSpacer($heading_tag)
+    // {
+    //     return EEH_Debug_Tools::plainOutput() && ($heading_tag === 'h1' || $heading_tag === 'h2')
+    //         ? EEH_Debug_Tools::lineBreak()
+    //         : '';
+    // }
 
 
     protected static function plainOutput()
@@ -506,12 +506,12 @@ class EEH_Debug_Tools
         $file = str_replace(EE_PLUGIN_DIR_PATH, '/', $file);
         if (EEH_Debug_Tools::plainOutput()) {
             if ($heading_tag === 'h1' || $heading_tag === 'h2') {
-                return " ({$file})" . EEH_Debug_Tools::lineBreak();
+                return " ({$file})";
             }
             return '';
         }
         return EEH_Debug_Tools::lineBreak()
-               . '<span style="font-size:9px;font-weight:normal;color:#666;line-height: 12px;">'
+               . '<span style="display:block; font-size:9px; font-weight:normal; color:#666; line-height:12px;">'
                . $file
                . EEH_Debug_Tools::lineBreak()
                . 'line no: '
@@ -542,12 +542,19 @@ class EEH_Debug_Tools
     protected static function pre_span($var)
     {
         ob_start();
-        var_dump($var);
+        if(is_array($var)) {
+            self::arrayDisplay($var);
+        } else {
+            var_dump($var);
+        }
         $var = ob_get_clean();
         if (EEH_Debug_Tools::plainOutput()) {
             return $var;
         }
-        return '<pre style="color: #9C3; display: inline-block; padding:.4em .6em; background: #334">' . $var . '</pre>';
+        return EEH_Debug_Tools::lineBreak()
+               . '<pre style="color: #9C3; display: inline-block; padding:.5em; margin: .25rem 0; background: #334">'
+               . $var
+               . '</pre>';
     }
 
 
@@ -621,6 +628,35 @@ class EEH_Debug_Tools
         return substr(strrchr($fqcn, '\\'), 1);
     }
 
+
+    /**
+     * @return void
+     */
+    public static function arrayDisplay(array $data, $depth = 0)
+    {
+        $depth++;
+        $spacer = self::plainOutput() ? ' . . ' : "\t";
+        $indent = str_repeat($spacer, $depth);
+        if ($depth === 1) {
+            echo self::lineBreak() . '{';
+        }
+        foreach ($data as $key => $child) {
+            echo self::lineBreak() . $indent . $key;
+            // $child = is_object($child) ? (array) $child : $child;
+            if (is_array($child)) {
+                echo " [ ";
+                self::arrayDisplay($child, $depth);
+                echo self::lineBreak() . $indent . ']';
+            } else if (is_scalar($child)) {
+                echo ' => ' . $child;
+            } else {
+                var_export($child);
+            }
+        }
+        if ($depth === 1) {
+            echo self::lineBreak() . '}';
+        }
+    }
 
 
     /******************** deprecated ********************/
