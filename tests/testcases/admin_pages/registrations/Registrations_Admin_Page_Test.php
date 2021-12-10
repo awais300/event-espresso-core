@@ -61,9 +61,9 @@ class Registrations_Admin_Page_Test extends EE_UnitTestCase
      * @throws InvalidInterfaceException
      * @since 4.10.2.p
      */
-    public function setUp()
+    public function set_up()
     {
-        parent::setUp();
+        parent::set_up();
         $this->original_timezone_string = get_option('timezone_string');
         //set timezone of site to 'America/Vancouver' for tests.
         update_option('timezone_string', 'America/Vancouver');
@@ -82,11 +82,11 @@ class Registrations_Admin_Page_Test extends EE_UnitTestCase
     }
 
 
-    public function tearDown()
+    public function tear_down()
     {
         //restore timezone to original setting
         update_option('timezone_string', $this->original_timezone_string);
-        parent::tearDown();
+        parent::tear_down();
     }
 
 

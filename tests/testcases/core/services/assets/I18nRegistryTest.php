@@ -24,7 +24,7 @@ class I18nRegistryTest extends EE_UnitTestCase
      * @throws \EventEspresso\core\exceptions\InvalidInterfaceException
      * @throws EE_Error
      */
-    public function setUp()
+    public function set_up()
     {
         $domain = DomainFactory::getShared(
             new FullyQualifiedName(
@@ -46,13 +46,13 @@ class I18nRegistryTest extends EE_UnitTestCase
             $test_map,
             $domain
         );
-        parent::setUp();
+        parent::set_up();
     }
 
 
-    public function tearDown()
+    public function tear_down()
     {
-        parent::tearDown();
+        parent::tear_down();
         $this->i18n = null;
     }
 

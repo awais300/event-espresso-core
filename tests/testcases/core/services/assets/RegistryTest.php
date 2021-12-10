@@ -35,7 +35,7 @@ class RegistryTest extends EE_UnitTestCase
      * @throws \EventEspresso\core\exceptions\InvalidFilePathException
      * @throws \EventEspresso\core\exceptions\InvalidInterfaceException
      */
-    public function setUp()
+    public function set_up()
     {
         add_filter('FHEE__EventEspresso_core_services_assets_Registry__debug', '__return_true');
         $domain = DomainFactory::getShared(
@@ -51,13 +51,13 @@ class RegistryTest extends EE_UnitTestCase
             new AssetCollection(),
             new i18nRegistry(array(), $domain)
         );
-        parent::setUp();
+        parent::set_up();
     }
 
 
-    public function tearDown()
+    public function tear_down()
     {
-        parent::tearDown();
+        parent::tear_down();
         $this->registry = null;
     }
 

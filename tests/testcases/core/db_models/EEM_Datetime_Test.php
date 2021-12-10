@@ -16,17 +16,17 @@
  */
 class EEM_Datetime_Test extends EE_UnitTestCase {
 
-    public function setUp() {
-        parent::setUp();
+    public function set_up() {
+        parent::set_up();
         //set timezone string.  NOTE, this is purposely a high positive timezone string because it works better for testing expiry times.
         update_option( 'timezone_string', 'Australia/Sydney' );
     }
 
 
-	public function tearDown(){
+	public function tear_down(){
 		//restore the timezone string to the default
 		update_option( 'timezone_string', '' );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 
@@ -277,7 +277,7 @@ class EEM_Datetime_Test extends EE_UnitTestCase {
 	 * @since 4.6.x
 	 */
 	public function test_create_new_blank_datetime() {
-		//if timezone is empty string then the setUp didn't work correctly.  For the purpose of this test
+		//if timezone is empty string then the set_up didn't work correctly.  For the purpose of this test
 		//we want a high positive timezone, so let's force that if necessary
 		if ( get_option( 'timezone_string' ) != 'Australia/Sydney' ) {
 			update_option( 'timezone_string', 'Australia/Sydney' );
