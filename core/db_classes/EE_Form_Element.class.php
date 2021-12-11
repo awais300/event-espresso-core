@@ -145,6 +145,18 @@ class EE_Form_Element extends EE_Base_Class
 
 
     /**
+     * @param string $attribute
+     * @return bool|float|int|string
+     * @throws EE_Error
+     * @throws ReflectionException
+     */
+    public function getAttribute(string $attribute)
+    {
+        return $this->attributes()->getAttribute($attribute);
+    }
+
+
+    /**
      * @param Attributes $attributes
      * @throws EE_Error
      * @throws ReflectionException
@@ -397,7 +409,7 @@ class EE_Form_Element extends EE_Base_Class
      */
     public function slug(): ?string
     {
-        return sanitize_title($this->label()->publicLabel());
+        return $this->label()->publicLabel();
     }
 
 
