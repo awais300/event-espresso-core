@@ -64,11 +64,11 @@ class RegistrantForm extends BaseRegistrantForm
         // verify that registration has valid event
         if ($registration->event() instanceof EE_Event) {
             $field_name      = 'Event_Question_Group.' . $this->event_question_group_model->fieldNameForContext(
-                $registration->is_primary_registrant()
-            );
+                    $registration->is_primary_registrant()
+                );
             $question_groups = $registration->event()->question_groups(
                 apply_filters(
-                    // @codingStandardsIgnoreStart
+                // @codingStandardsIgnoreStart
                     'FHEE__EE_SPCO_Reg_Step_Attendee_Information___registrations_reg_form__question_groups_query_parameters',
                     // @codingStandardsIgnoreEnd
                     [
@@ -87,7 +87,7 @@ class RegistrantForm extends BaseRegistrantForm
                 $this->form_args = $this->generateTopLevelFormArgs($registration, $admin_request, $attendee_nmbr);
                 foreach ($question_groups as $question_group) {
                     if ($question_group instanceof EE_Question_Group) {
-                        $question_group_reg_form = LoaderFactory::getNew(
+                        $question_group_reg_form                                         = LoaderFactory::getNew(
                             RegFormQuestionGroup::class,
                             [$registration, $question_group, $admin_request]
                         );
