@@ -14,6 +14,7 @@ languages/
 vendor/
 *.code-workspace
 *.DS_Store
+.env
 *.idea
 *.vscode
 
