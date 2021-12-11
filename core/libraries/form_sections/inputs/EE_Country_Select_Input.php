@@ -31,19 +31,18 @@ class EE_Country_Select_Input extends EE_Select_Input
 
 
     /**
-     * @param array $country_options
-     * @param array $input_settings
+     * @param array|null $country_options
+     * @param array      $input_settings
      * @throws EE_Error
      * @throws InvalidArgumentException
      * @throws InvalidDataTypeException
      * @throws InvalidInterfaceException
      * @throws ReflectionException
      */
-    public function __construct($country_options = null, $input_settings = array())
+    public function __construct(?array $country_options = null, $input_settings = [])
     {
-        $get = isset($input_settings[ self::OPTION_GET_KEY ])
-            ? $input_settings[ self::OPTION_GET_KEY ]
-            : self::OPTION_GET_ACTIVE;
+        $get = $input_settings[ self::OPTION_GET_KEY ] ?? self::OPTION_GET_ACTIVE;
+
         $country_options = apply_filters(
             'FHEE__EE_Country_Select_Input____construct__country_options',
             $this->get_country_answer_options($country_options, $get),
@@ -60,8 +59,8 @@ class EE_Country_Select_Input extends EE_Select_Input
     /**
      * get_country_answer_options
      *
-     * @param array  $country_options
-     * @param string $get
+     * @param array|null $country_options
+     * @param string     $get
      * @return array
      * @throws EE_Error
      * @throws InvalidArgumentException
@@ -69,23 +68,24 @@ class EE_Country_Select_Input extends EE_Select_Input
      * @throws InvalidDataTypeException
      * @throws InvalidInterfaceException
      */
-    public function get_country_answer_options($country_options = null, $get = self::OPTION_GET_ACTIVE)
-    {
+    public function get_country_answer_options(
+        ?array $country_options = null,
+        string $get = self::OPTION_GET_ACTIVE
+    ): ?array {
         // if passed something that is NOT an array
-        if (! is_array($country_options)) {
+        if (empty($country_options)) {
             // get possibly cached list of countries
             $countries = $get === self::OPTION_GET_ALL
                 ? EEM_Country::instance()->get_all_countries()
                 : EEM_Country::instance()->get_all_active_countries();
-            if (! empty($countries)) {
-                $country_options[''] = '';
-                foreach ($countries as $country) {
-                    if ($country instanceof EE_Country) {
-                        $country_options[ $country->ID() ] = $country->name();
-                    }
+            if (empty($countries)) {
+                return [];
+            }
+            $country_options[''] = '';
+            foreach ($countries as $country) {
+                if ($country instanceof EE_Country) {
+                    $country_options[ $country->ID() ] = $country->name();
                 }
-            } else {
-                $country_options = array();
             }
         }
         return $country_options;
