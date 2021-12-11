@@ -126,7 +126,7 @@ class FormLabel implements JsonableInterface
      */
     public function setAdminLabel(string $adminLabel): void
     {
-        $this->adminLabel = sanitize_text_field($adminLabel);
+        $this->adminLabel = sanitize_title($adminLabel);
     }
 
 
@@ -146,7 +146,7 @@ class FormLabel implements JsonableInterface
      */
     public function setPublicLabel(string $publicLabel): void
     {
-        $this->publicLabel = sanitize_text_field($publicLabel);
+        $this->publicLabel = sanitize_title($publicLabel);
     }
 
 
