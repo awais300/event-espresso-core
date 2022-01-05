@@ -14,7 +14,7 @@ jobs:
     if: ${{ needs.what_has_changed.outputs.php == 'true' }}
     strategy:
       matrix:
-        php-version: [ '7.4' ]
+        php-version: [ '7.1' ]
     name: Lint with PHP ${{ matrix.php-version }}
     steps:
       - name: Checkout and set up LAMP
@@ -22,7 +22,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           php-tools: composer:v2
-          composer-options: '--optimize-autoloader --ignore-platform-reqs --with-dependencies'
 
       - name: PHP Lint
         run: composer config-eventespressocs && composer run-script lint:skip-warnings
@@ -53,7 +52,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           php-tools: composer:v2, phpunit-polyfills, ${{ env.phpUnitVersion }}
-          composer-options: '--optimize-autoloader --ignore-platform-reqs --with-dependencies'
 
       - name: Set WP version for PHP 7
         if: ${{ startsWith( matrix.php-version, '7.' ) }}
